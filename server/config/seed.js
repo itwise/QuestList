@@ -7,6 +7,7 @@
 
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
+var Quest = require('../api/quest/quest.model');
 
 Thing.find({}).remove(function() {
   Thing.create({
@@ -44,6 +45,25 @@ User.find({}).remove(function() {
     password: 'admin'
   }, function() {
       console.log('finished populating users');
+          createQuest();
     }
   );
 });
+
+var createQuest = function(){
+    var user_id;
+    User.findOne({ email : 'test@test.com'}).exec(function(err, user){
+        user_id = user;
+    });
+    Quest.find({}).remove(function() {
+        Quest.create({
+            name: "test1",
+            tag: "test",
+            register : user_id
+        },{
+            name: "test2",
+            tag: "test",
+            register : user_id
+        });
+    });
+}
