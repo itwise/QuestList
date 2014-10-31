@@ -1,0 +1,60 @@
+<div class="quest-timeline">
+  <div class="col-sm-12 no-padding">
+    <div class="quest-panel" data-ng-show="questTimelines === undefined || questTimelines.length === 0">
+      퀘스트 내역이 없습니다!
+    </div>
+    <ul class="list-unstyled">
+      <li data-ng-repeat="questTimeline in questTimelines">
+        <article class="quest-panel quest-timeline-content clearfix">
+          <div class="col-sm-2">
+            <div class="quest-progress-user-profile-photo"></div>
+          </div>
+          <div class="col-sm-10">
+            <strong>
+              <a href="" data-ui-sref="profile({userId: 1})">{{questTimeline.userName}}</a>
+            </strong>님이
+            <span class="quest-progress-name">{{questTimeline.quest.name}}</span><strong>{{getConnectingWord(questTimeline.quest.name)}}</strong>
+            {{questTimeline.quest.status}}하셨습니다.
+          </div>
+          <div class="col-sm-12">
+            <p>
+              {{questTimeline.memo}}
+            </p>
+          </div>
+          <div class="col-sm-12 quest-tags">
+            <ul class="list-inline">
+              <li data-ng-repeat="tag in questTimeline.quest.tags">
+                <a href="#">#{{tag}}</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-sm-12" data-ng-show="questTimeline.comments.length > 0">
+            {{questTimeline.comments.length}}개의 댓글
+          </div>
+          <div class="col-sm-12 quest-timeline-interaction-wrapper">
+            <div class="pull-left"><button class="no-decorate-button">응원하기</button></div>
+          </div>
+          <div class="col-sm-12 quest-timeline-comment-wrapper no-padding">
+            <hr/>
+            <ul class="list-unstyled">
+              <li data-ng-repeat="comment in questTimeline.comments">
+                <article class="quest-timeline-comment default-padding">
+                  <div class="pull-left quest-timeline-comment-profile-photo"></div>
+                  <div class="pull-left">{{comment.userName}}</div>
+                  <div class="pull-left quest-timeline-comment-content">{{comment.content}}</div>
+                  <div class="pull-right">{{comment.commentDate | date:'yyyy-MM-dd HH:mm'}}</div>
+                  <div class="clearfix"></div>
+                </article>
+              </li>
+            </ul>
+            <div class="col-sm-12 quest-timeline-comment-input-wrapper default-padding">
+              <div class="pull-left quest-timeline-comment-profile-photo"></div>
+              <input type="text" class="form-control quest-comment-input" data-ng-model="questTimeline.addTargetComment.content"/>
+              <button class="btn btn-info pull-right" data-ng-click="addComment(questTimeline)">댓글 달기</button>
+            </div>
+          </div>
+        </article>
+      </li>
+    </ul>
+  </div>
+</div>

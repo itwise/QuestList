@@ -1,0 +1,33 @@
+.quest-timeline-interaction-wrapper{
+  padding-top:10px;
+  border-top:1px solid #eeeeee;
+  height:30px;
+}
+.quest-timeline-interaction-wrapper div{
+  margin-right:20px;
+  font-size:1em;
+}
+
+.quest-timeline-comment-wrapper{
+  padding:0 0 0 0;
+}
+.quest-timeline-comment{
+
+}
+.quest-comment-input{
+  display:inline;
+  width:100%;
+  max-width:355px;
+}
+.quest-timeline-comment-input-wrapper{
+
+}
+.quest-timeline-comment-content{
+  padding-left:10px;
+}
+.quest-timeline-comment-profile-photo{
+  width:30px;
+  height:30px;
+  border:1px solid #eeeeee;
+  margin-right:5px;
+}

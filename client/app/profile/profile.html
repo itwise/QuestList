@@ -19,36 +19,9 @@
         </ul>
       </aside>
     </div>
-
     <div class="col-sm-6">
-      <div class="quest-panel">
-        <form action="/api/quest">
-          <div class="row">
-            <div class="col-sm-12 form-group">
-              <input type="text" class="form-control" placeholder="퀘스트 이름이 어떻게 되나요?"/>
-            </div>
-            <div class="col-sm-12 form-group">
-              <textarea class="form-control" placeholder="어떤 퀘스트인가요?"></textarea>
-            </div>
-            <div class="col-sm-12 form-group">
-              <label class="col-sm-1">
-                Tag
-              </label>
-              <div class="col-sm-11 quest-tag-wrapper">
-                <input type="text" class="form-control"/>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-12 text-right">
-              <button class="btn btn-primary">등록</button>
-            </div>
-          </div>
-        </form>
-      </div>
       <quest-timeline data-quest-timelines="questTimelines"></quest-timeline>
     </div>
-
     <div class="col-sm-3">
       <div class="quest-panel col-sm-12">
         <h4>수행가능한 퀘스트</h4>
