@@ -18,6 +18,7 @@
 }
 .quest-timeline{
   overflow-y:auto;
+  height:100%;
 }
 
 .quest-timeline-content{
@@ -68,4 +69,7 @@
   height:30px;
   border:1px solid #eeeeee;
   margin-right:5px;
+}
+.main-container{
+  height:90%;
 }
