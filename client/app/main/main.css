@@ -1,30 +1,71 @@
-.thing-form {
-    margin: 20px 0;
-}
-
-#banner {
-    border-bottom: none;
-    margin-top: -20px;
-}
-
-#banner h1 {
-    font-size: 60px;
-    line-height: 1;
-    letter-spacing: -1px;
-}
-
-.hero-unit {
-    position: relative;
-    padding: 30px 15px;
-    color: #F5F5F5;
-    text-align: center;
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-    background: #4393B9;
-}
 
 .footer {
     text-align: center;
     padding: 30px 0;
     margin-top: 70px;
     border-top: 1px solid #E5E5E5;
+}
+
+.quest-wrapper{
+  height:100%;
+}
+
+.quest-user-profile-photo{
+  width:70px;
+  height:70px;
+  border: 1px solid #eeeeee;
+  background-size: cover;
+}
+.quest-timeline{
+  overflow-y:auto;
+}
+
+.quest-timeline-content{
+  padding-top:15px;
+  padding-bottom:15px;
+}
+
+.quest-tag-wrapper{
+  /* bootstrap override */
+  padding-right:0;
+}
+.quest-progress-user-profile-photo{
+  width:50px;
+  height:50px;
+  border: 1px solid #eeeeee;
+}
+
+
+.quest-timeline-interaction-wrapper{
+  padding-top:10px;
+  border-top:1px solid #eeeeee;
+  height:30px;
+}
+.quest-timeline-interaction-wrapper div{
+  margin-right:20px;
+  font-size:1em;
+}
+
+.quest-timeline-comment-wrapper{
+  padding:0 0 0 0;
+}
+.quest-timeline-comment{
+
+}
+.quest-comment-input{
+  display:inline;
+  width:100%;
+  max-width:375px;
+}
+.quest-timeline-comment-input-wrapper{
+
+}
+.quest-timeline-comment-content{
+  padding-left:10px;
+}
+.quest-timeline-comment-profile-photo{
+  width:30px;
+  height:30px;
+  border:1px solid #eeeeee;
+  margin-right:5px;
 }

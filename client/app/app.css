@@ -37,3 +37,35 @@
     color: #000;
     padding: 0.2em 0;
 }
+
+body{
+  background-color:#efefef;
+}
+html, body, .main-view, .main-view-wrapper{
+  height:100%;
+}
+
+.no-decorate-button{
+  border:none;
+  background:none;
+}
+
+/* bootstrap override */
+.navbar{
+  margin-bottom:0;
+}
+
+.default-padding{
+  padding:5px 5px 5px 5px;
+}
+.no-padding{
+  padding: 0 0 0 0;
+}
+.quest-panel{
+  margin-top:15px;
+  padding: 8px 8px 8px 8px;
+  background-color:#ffffff;
+  border:1px solid #cccccc;
+  border-radius:5px;
+}
+

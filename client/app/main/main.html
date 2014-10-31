@@ -1,38 +1,123 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<header class="hero-unit" id="banner">
-  <div class="container">
-    <h1>'Allo, 'Allo!</h1>
-    <p class="lead">Kick-start your next web app with Angular Fullstack</p>
-    <img src="assets/images/yeoman.png" alt="I'm Yeoman">
-  </div>
-</header>
+<section class="container" data-ng-controller="MainCtrl">
+  <div class="quest-wrapper col-sm-12">
+    <div class="col-sm-3">
+      <aside class="quest-panel col-sm-12">
+        <h4>Profile</h4>
+        <div class="quest-user-profile-photo pull-left" data-ng-style="{'background-image':'url(' + user.profilePhotoUrl + ')'}">
 
-<div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <h1 class="page-header">Features:</h1>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in awesomeThings">
-        <li><a href="#" tooltip="{{thing.info}}">{{thing.name}}<button type="button" class="close" ng-click="deleteThing(thing)">&times;</button></a></li>
-      </ul>
+        </div>
+        <div class="pull-right">
+          {{user.name}}
+        </div>
+      </aside>
+      <aside class="quest-panel col-sm-12">
+        <h4>퀘스트 수행 랭킹</h4>
+        <ul class="list-unstyled">
+
+        </ul>
+      </aside>
+    </div>
+    <div class="col-sm-6 quest-timeline">
+      <div class="quest-panel col-sm-12">
+        <form action="/api/quest">
+          <div class="row">
+            <div class="col-sm-12 form-group">
+              <input type="text" class="form-control" placeholder="퀘스트 이름이 어떻게 되나요?"/>
+            </div>
+            <div class="col-sm-12 form-group">
+              <textarea class="form-control" placeholder="어떤 퀘스트인가요?"></textarea>
+            </div>
+            <div class="col-sm-12 form-group">
+              <label class="col-sm-1">
+                Tag
+              </label>
+              <div class="col-sm-11 quest-tag-wrapper">
+                <input type="text" class="form-control"/>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 text-right">
+              <button class="btn btn-primary">등록</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-sm-12 no-padding">
+        <ul class="list-unstyled">
+          <li data-ng-repeat="questTimeline in questTimelines">
+            <article class="quest-panel quest-timeline-content clearfix">
+              <div class="col-sm-2">
+                <div class="quest-progress-user-profile-photo">
+
+                </div>
+              </div>
+              <div class="col-sm-10">
+                <strong>{{questTimeline.userName}}</strong>님이
+                <span class="quest-progress-name">{{questTimeline.quest.name}}</span><strong>{{getConnectingWord(questTimeline.quest.name)}}</strong>
+                {{questTimeline.quest.status}}하셨습니다.
+              </div>
+              <div class="col-sm-12">
+                <p>
+                  {{questTimeline.memo}}
+                </p>
+              </div>
+              <div class="col-sm-12 quest-tags">
+                <ul class="list-inline">
+                  <li data-ng-repeat="tag in questTimeline.quest.tags">
+                    <a href="#">#{{tag}}</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-sm-12" data-ng-show="questTimeline.comments.length > 0">
+                {{questTimeline.comments.length}}개의 댓글
+              </div>
+              <div class="col-sm-12 quest-timeline-interaction-wrapper">
+                <div class="pull-left"><button class="no-decorate-button">응원하기</button></div>
+              </div>
+              <div class="col-sm-12 quest-timeline-comment-wrapper no-padding">
+                <hr/>
+                <ul class="list-unstyled">
+                  <li data-ng-repeat="comment in questTimeline.comments">
+                    <article class="quest-timeline-comment default-padding">
+                      <div class="pull-left quest-timeline-comment-profile-photo"></div>
+                      <div class="pull-left">{{comment.userName}}</div>
+                      <div class="pull-left quest-timeline-comment-content">{{comment.content}}</div>
+                      <div class="pull-right">{{comment.commentDate | date:'yyyy-MM-dd HH:mm'}}</div>
+                      <div class="clearfix"></div>
+                    </article>
+                  </li>
+                </ul>
+                <div class="col-sm-12 quest-timeline-comment-input-wrapper default-padding">
+                  <div class="pull-left quest-timeline-comment-profile-photo"></div>
+                  <input type="text" class="form-control quest-comment-input" data-ng-model="questTimeline.addTargetComment.content"/>
+                  <button class="btn btn-info" data-ng-click="addComment(questTimeline)">댓글 달기</button>
+                </div>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="quest-panel col-sm-12">
+        <h4>수행가능한 퀘스트</h4>
+        <ul class="list-unstyled">
+          <li>그저그런 퀘스트</li>
+          <li>일리단 때려잡기</li>
+        </ul>
+      </div>
+      <div class="quest-panel col-sm-12">
+        <h4>진행 중인 퀘스트</h4>
+        <div class="well" data-ng-show="nowProgressQuests.length === 0">
+          현재 진행 중인 퀘스트가 없습니다.
+        </div>
+        <ul class="list-unstyled">
+          <li data-ng-repeat="nowProgressQuest in nowProgressQuests"></li>
+        </ul>
+      </div>
     </div>
   </div>
-
-  <form class="thing-form">
-    <label>Syncs in realtime across clients</label>
-    <p class="input-group">
-      <input type="text" class="form-control" placeholder="Add a new thing here." ng-model="newThing">
-      <span class="input-group-btn">
-        <button type="submit" class="btn btn-primary" ng-click="addThing()">Add New</button>
-      </span>
-    </p>
-  </form>
-</div>
-
-<footer class="footer">
-  <div class="container">
-      <p>Angular Fullstack v2.0.13 |
-        <a href="https://twitter.com/tyhenkel">@tyhenkel</a> |
-         <a href="https://github.com/DaftMonk/generator-angular-fullstack/issues?state=open">Issues</a></p>
-  </div>
-</footer>
+</section>
