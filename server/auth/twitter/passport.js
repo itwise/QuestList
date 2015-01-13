@@ -11,6 +11,7 @@ exports.setup = function (User, config) {
     User.findOne({
       'twitter.id_str': profile.id
     }, function(err, user) {
+      console.log(profile);
       if (err) {
         return done(err);
       }
@@ -20,6 +21,7 @@ exports.setup = function (User, config) {
           username: profile.username,
           role: 'user',
           provider: 'twitter',
+          profileImage: profile._json.profile_image_url,
           twitter: profile._json
         });
         user.save(function(err) {
@@ -27,7 +29,12 @@ exports.setup = function (User, config) {
           return done(err, user);
         });
       } else {
-        return done(err, user);
+        // 사용자 프로필 사진으로 업데이트 처리
+        user.profileImage = profile._json.profile_image_url;
+
+        user.save(function(err){
+          return done(err, user);
+        });
       }
     });
     }
