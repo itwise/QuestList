@@ -23,7 +23,7 @@ exports.setup = function (User, config) {
             role: 'user',
             username: profile.username,
             provider: 'facebook',
-            profileImage: 'http://graph.facebook.com/'+ profile.id +'/?fields=picture&type=large',
+            profileImage: 'http://graph.facebook.com/'+ profile.id +'/picture',
             facebook: profile._json
           });
           user.save(function(err) {
