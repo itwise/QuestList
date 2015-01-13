@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('questApp')
-  .controller('MainCtrl', function ($scope) {
+  .controller('MainCtrl', function ($scope, Auth) {
 
     $scope.questTimelines = [
       {
@@ -53,10 +53,7 @@ angular.module('questApp')
       }
     ];
 
-    $scope.user = {
-      name: 'TaeHee Kim',
-      profilePhotoUrl: 'https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xfp1/v/t1.0-1/c0.0.160.160/p160x160/10524739_718681614866509_729725394701456022_n.jpg?oh=3aad5223da1de9c55638179cec323aa4&oe=54ACFFF9&__gda__=1420426134_53fa507047fbe81f6790b78e22810c8c'
-    };
+    $scope.currentUser = Auth.getCurrentUser();
 
     $scope.nowProgressQuests = [
 

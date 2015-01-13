@@ -8,7 +8,8 @@ angular.module('questApp')
     }];
     $scope.currentUser = Auth.getCurrentUser();
 
-    $scope.isCollapsed   = true;
+    console.log($scope.currentUser);
+    $scope.isCollapsed = true;
     $scope.isLoggedIn = Auth.isLoggedIn;
     $scope.isAdmin = Auth.isAdmin;
 
