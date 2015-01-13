@@ -3,8 +3,8 @@
 angular.module('questApp')
   .controller('NavbarCtrl', function ($scope, $location, Auth) {
     $scope.menu = [{
-      'title': 'Home',
-      'link': '/'
+      'title': 'My Quest',
+      'link': '/profile/me'
     }];
 
     $scope.isCollapsed = true;
