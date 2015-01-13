@@ -42,14 +42,14 @@ var all = {
   },
 
   facebook: {
-    clientID:     process.env.FACEBOOK_ID || 'id',
-    clientSecret: process.env.FACEBOOK_SECRET || 'secret',
+    clientID:     process.env.FACEBOOK_ID || '1776599242566117',
+    clientSecret: process.env.FACEBOOK_SECRET || '3a6ad74a08a141a23296a5320812bc10',
     callbackURL:  (process.env.DOMAIN || '') + '/auth/facebook/callback'
   },
 
   twitter: {
-    clientID:     process.env.TWITTER_ID || 'id',
-    clientSecret: process.env.TWITTER_SECRET || 'secret',
+    clientID:     process.env.TWITTER_ID || '1aqoUhKNHu1YgIoozzIf8y9jG',
+    clientSecret: process.env.TWITTER_SECRET || '9rg3yfQOygCXr1BZOB6Yc0Xq0pwTBV6J2atQ604B8Z1l3omqQd',
     callbackURL:  (process.env.DOMAIN || '') + '/auth/twitter/callback'
   },
 
