@@ -57,6 +57,11 @@ var all = {
     clientID:     process.env.GOOGLE_ID || 'id',
     clientSecret: process.env.GOOGLE_SECRET || 'secret',
     callbackURL:  (process.env.DOMAIN || '') + '/auth/google/callback'
+  },
+
+  kakao: {
+    clientID: 'ac81c2df9743fbf33b2e34b88f96c2bf',
+    callbackURL: '/auth/kakao/callback'
   }
 };
 
