@@ -2,8 +2,11 @@
 
 angular.module('questApp')
   .controller('SettingsCtrl', function ($scope, User, Auth) {
+    $scope.currentUser = Auth.getCurrentUser();
     $scope.errors = {};
-
+    $scope.user = {
+      name: $scope.currentUser.name
+    };
     $scope.changePassword = function(form) {
       $scope.submitted = true;
       if(form.$valid) {

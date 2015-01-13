@@ -73,7 +73,6 @@ angular.module('questApp')
         content: questTimeline.addTargetComment.content
       };
 
-      console.log(comment);
       questTimeline.comments.push(comment);
       questTimeline.addTargetComment = {};
     };

@@ -6,11 +6,11 @@ angular.module('questApp')
       'title': 'My Quest',
       'link': '/profile/me'
     }];
+    $scope.currentUser = Auth.getCurrentUser();
 
-    $scope.isCollapsed = true;
+    $scope.isCollapsed   = true;
     $scope.isLoggedIn = Auth.isLoggedIn;
     $scope.isAdmin = Auth.isAdmin;
-    $scope.getCurrentUser = Auth.getCurrentUser;
 
     $scope.logout = function() {
       Auth.logout();
