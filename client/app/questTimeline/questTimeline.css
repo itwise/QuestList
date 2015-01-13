@@ -1,6 +1,7 @@
 .quest-timeline-interaction-wrapper{
+  margin-top:10px;
+  margin-bottom:10px;
   padding-top:10px;
-  border-top:1px solid #eeeeee;
   height:30px;
 }
 .quest-timeline-interaction-wrapper div{
@@ -9,6 +10,8 @@
 }
 
 .quest-timeline-comment-wrapper{
+  margin-top:10px;
+  margin-bottom:10px;
   padding:0 0 0 0;
 }
 .quest-timeline-comment{
@@ -17,7 +20,7 @@
 .quest-comment-input{
   display:inline;
   width:100%;
-  max-width:355px;
+  max-width:300px;
 }
 .quest-timeline-comment-input-wrapper{
 

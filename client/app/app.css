@@ -30,7 +30,7 @@
 /**
  * App-wide Styles
  */
-
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 .browsehappy {
     margin: 0.2em 0;
     background: #ccc;
@@ -39,7 +39,7 @@
 }
 
 body{
-  background-color:#efefef;
+  font-family: 'Nanum Gothic', sans-serif;
 }
 html, body, .main-view, .main-view-wrapper{
   height:100%;
