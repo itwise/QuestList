@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('todoListApp')
+angular.module('questApp')
   .factory('Modal', function ($rootScope, $modal) {
     /**
      * Opens a modal

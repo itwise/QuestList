@@ -1,7 +1,7 @@
 'use strict';
 
 var express = require('express');
-var controller = require('./progressQuest.controller');
+var controller = require('./questPool.controller');
 
 var router = express.Router();
 

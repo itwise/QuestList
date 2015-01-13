@@ -3,7 +3,7 @@
 describe('Directive: questTimeline', function () {
 
   // load the directive's module and view
-  beforeEach(module('todoListApp'));
+  beforeEach(module('questApp'));
   beforeEach(module('app/questTimeline/questTimeline.html'));
 
   var element, scope;

@@ -3,7 +3,7 @@
 describe('Controller: MainCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('todoListApp'));
+  beforeEach(module('questApp'));
   beforeEach(module('socketMock'));
 
   var MainCtrl,

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('todoListApp')
+angular.module('questApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('login', {

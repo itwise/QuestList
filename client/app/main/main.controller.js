@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('todoListApp')
+angular.module('questApp')
   .controller('MainCtrl', function ($scope) {
 
     $scope.questTimelines = [

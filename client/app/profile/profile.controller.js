@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('todoListApp')
+angular.module('questApp')
   .controller('ProfileCtrl', function ($scope) {
     $scope.message = 'Hello';
   });

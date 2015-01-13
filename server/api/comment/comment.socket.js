@@ -4,21 +4,21 @@
 
 'use strict';
 
-var Progressquest = require('./progressQuest.model');
+var Comment = require('./comment.model');
 
 exports.register = function(socket) {
-  Progressquest.schema.post('save', function (doc) {
+  Comment.schema.post('save', function (doc) {
     onSave(socket, doc);
   });
-  Progressquest.schema.post('remove', function (doc) {
+  Comment.schema.post('remove', function (doc) {
     onRemove(socket, doc);
   });
 }
 
 function onSave(socket, doc, cb) {
-  socket.emit('progressQuest:save', doc);
+  socket.emit('comment:save', doc);
 }
 
 function onRemove(socket, doc, cb) {
-  socket.emit('progressQuest:remove', doc);
+  socket.emit('comment:remove', doc);
 }
