@@ -29,13 +29,12 @@
     <div class="col-sm-6">
       <div class="panel panel-default">
         <div class="panel-body">
-          <form action="/api/quest">
-            <div class="row">
+            <div class="row" data-ng-model="quest">
               <div class="col-sm-12 form-group">
-                <input type="text" class="form-control" placeholder="퀘스트 이름이 어떻게 되나요?"/>
+                <input type="text" class="form-control" data-ng-model="quest.title" placeholder="퀘스트 이름이 어떻게 되나요?"/>
               </div>
               <div class="col-sm-12 form-group">
-                <textarea class="form-control" placeholder="어떤 퀘스트인가요?"></textarea>
+                <textarea class="form-control" placeholder="어떤 퀘스트인가요?" data-ng-model="quest.content"></textarea>
               </div>
               <div class="col-sm-12 form-group">
                 <label class="col-sm-1">
@@ -44,16 +43,15 @@
                   </span>
                 </label>
                 <div class="col-sm-11 quest-tag-wrapper">
-                  <input type="text" class="form-control"/>
+                  <input type="text" class="form-control" data-ng-model="quest.tags"/>
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="col-sm-12 text-right">
-                <button class="btn btn-fab btn-raised btn-material-lightblue"><i class="mdi-editor-border-color"></i></button>
+                <button class="btn btn-fab btn-raised btn-material-lightblue" data-ng-click="addQuest(quest)"><i class="mdi-editor-border-color"></i></button>
               </div>
             </div>
-          </form>
         </div>
       </div>
       <quest-timeline data-quest-timelines="questTimelines"></quest-timeline>

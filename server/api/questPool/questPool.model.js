@@ -25,10 +25,6 @@ var QuestPoolSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  availableUsers: [{
-    ref: 'User',
-    type: Schema.Types.ObjectId
-  }],
   tags: [String]
 });
 

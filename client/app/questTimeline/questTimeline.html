@@ -6,23 +6,24 @@
     <article class="panel panel-default" data-ng-repeat="questTimeline in questTimelines">
       <section class="panel-body">
         <div class="col-sm-2">
-          <div class="quest-progress-user-profile-photo"></div>
+          <div class="quest-progress-user-profile-photo" style="background-image:url('{{questTimeline.user.profileImage}}')">
+          </div>
         </div>
         <div class="col-sm-10">
           <strong>
-            <a href="" data-ui-sref="profile({userId: 1})">{{questTimeline.userName}}</a>
+            <a href="" data-ui-sref="profile({userId: questTimeline.user._id})">{{questTimeline.user.name}}</a>
           </strong>님이
-          <span class="quest-progress-name">{{questTimeline.quest.name}}</span><strong>{{getConnectingWord(questTimeline.quest.name)}}</strong>
+          <span class="quest-progress-name">{{questTimeline.questPool.title}}</span><strong>{{getConnectingWord(questTimeline.questPool.title)}}</strong>
           {{questTimeline.quest.status}}하셨습니다.
         </div>
         <div class="col-sm-12">
           <p>
-            {{questTimeline.memo}}
+            {{questTimeline.content}}
           </p>
         </div>
         <div class="col-sm-12 quest-tags">
           <ul class="list-inline">
-            <li data-ng-repeat="tag in questTimeline.quest.tags">
+            <li data-ng-repeat="tag in questTimeline.questPool.tags">
               <a href="#">#{{tag}}</a>
             </li>
           </ul>

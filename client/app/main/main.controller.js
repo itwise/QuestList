@@ -1,57 +1,13 @@
 'use strict';
 
 angular.module('questApp')
-  .controller('MainCtrl', function ($scope, Auth) {
+  .controller('MainCtrl', function ($scope, Auth, $http) {
 
-    $scope.questTimelines = [
-      {
-        timelineId: 0,
-        userName: 'SoYeon Park',
-        quest: {
-          name: '문서정리',
-          status: '완료',
-          tags:[
-            '노트북', '업무'
-          ]
-        },
-        startDate: new Date(),
-        memo: 'wiki에 express 정리',
-        addTargetComment: {},
-        comments: [
-          {
-            userName: 'TaeHee Kim',
-            content: '오오',
-            commentDate: new Date() - (1000 * 60 * 60)
-          }
-        ]
-      },
-      {
-        timelineId: 0,
-        userName: 'DongJun Kim',
-        quest: {
-          name: '해킨토시 설치',
-          status: '시작',
-          tags:[
-            '노트북', '업무'
-          ]
-        },
-        startDate: new Date(),
-        memo: '인민에어....',
-        addTargetComment: {},
-        comments: [
-          {
-            userName: 'TaeHee Kim',
-            content: '이거 어떄요?',
-            commentDate: new Date() - (1000 * 60 * 60)
-          },
-          {
-            userName: 'DongJun Kim',
-            content: '쓸만하네요 ㅋㅋㅋㅋ',
-            commentDate: new Date() - (1000 * 60 * 48)
-          }
-        ]
-      }
-    ];
+    $http.get('/api/quests').success(function(data){
+      console.log(data);
+      $scope.questTimelines = data;
+    });
+
 
     $scope.currentUser = Auth.getCurrentUser();
 
@@ -73,6 +29,15 @@ angular.module('questApp')
       questTimeline.comments.push(comment);
       questTimeline.addTargetComment = {};
     };
+
+    $scope.addQuest = function(quest){
+      $http.post('/api/quests', quest).success(function(data, status, headers, config){
+
+      }).error(function(data, status, headers, config){
+
+      });
+    };
+
     $scope.getConnectingWord = function(word){
       var code = word.charCodeAt(word.length-1) - 44032;
 

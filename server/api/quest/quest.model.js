@@ -26,7 +26,13 @@ var QuestSchema = new Schema({
     ref: 'QuestPool',
     type: Schema.Types.ObjectId,
     required: true
-  }
+  },
+  comments : [{
+    ref : 'Comment',
+    type : Schema.Types.ObjectId,
+    required : false
+  }]
+
 });
 
 module.exports = mongoose.model('Quest', QuestSchema);

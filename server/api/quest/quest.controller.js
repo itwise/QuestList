@@ -2,10 +2,17 @@
 
 var _ = require('lodash');
 var Quest = require('./quest.model');
+var QuestPool = require('../questPool/questPool.model');
 
 // Get list of quests
 exports.index = function(req, res) {
-  Quest.find(function (err, quests) {
+
+  Quest.find({ user : req.user._id})
+    .limit(10).sort('-startDate')
+    .populate('questPool')
+    .populate('user')
+    .populate('comments')
+    .exec(function(err, quests){
     if(err) { return handleError(res, err); }
     return res.json(200, quests);
   });
@@ -22,11 +29,27 @@ exports.show = function(req, res) {
 
 // Creates a new quest in the DB.
 exports.create = function(req, res) {
-  Quest.create(req.body, function(err, quest) {
+  var insertData = req.body;
+  insertData.user = req.user._id;
+  QuestPool.findOne({title : req.body.title},function(err, result){
+    if(result){
+      insertData.questPool = result._id;
+      questCreate(insertData, res);
+    }else{
+      QuestPool.create({title : req.body.title, tags: req.body.tags}, function(err, questPool){
+        insertData.questPool = questPool._id;
+        questCreate(insertData, res);
+      });
+    }
+  });
+};
+
+var questCreate = function(quest, res){
+  Quest.create(quest, function(err, quest) {
     if(err) { return handleError(res, err); }
     return res.json(201, quest);
   });
-};
+}
 
 // Updates an existing quest in the DB.
 exports.update = function(req, res) {

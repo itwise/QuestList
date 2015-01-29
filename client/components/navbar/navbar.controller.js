@@ -5,10 +5,12 @@ angular.module('questApp')
     $scope.menu = [{
       'title': 'My Quest',
       'link': '/profile/me'
+    },{
+      'title': 'Quest Time Line',
+      'link': '/quest/me'
     }];
     $scope.currentUser = Auth.getCurrentUser();
 
-    console.log($scope.currentUser);
     $scope.isCollapsed = true;
     $scope.isLoggedIn = Auth.isLoggedIn;
     $scope.isAdmin = Auth.isAdmin;
