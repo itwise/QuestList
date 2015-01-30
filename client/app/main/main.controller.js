@@ -20,12 +20,14 @@ angular.module('questApp')
     ];
 
     $scope.addComment = function(questTimeline){
+      console.log('aaaa');
       var comment = {
         userName: 'TaeHee Kim',
         commentDate: new Date(),
         content: questTimeline.addTargetComment.content
       };
-
+      console.log(comment);
+      console.log(questTimeline);
       questTimeline.comments.push(comment);
       questTimeline.addTargetComment = {};
     };

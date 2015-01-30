@@ -3,7 +3,7 @@
 describe('Controller: QuesttimelineCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('todoListApp'));
+  beforeEach(module('questApp'));
 
   var QuesttimelineCtrl, scope;
 
