@@ -13,8 +13,8 @@ exports.index = function(req, res) {
     .populate('user')
     .populate('comments')
     .exec(function(err, quests){
-      if(err) { return handleError(res, err); }
-      return res.json(200, quests);
+    if(err) { return handleError(res, err); }
+    return res.json(200, quests);
   });
 };
 
