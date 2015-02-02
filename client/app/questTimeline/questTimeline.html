@@ -41,9 +41,9 @@
             <li data-ng-repeat="comment in questTimeline.comments">
               <article class="quest-timeline-comment default-padding">
                 <div class="pull-left quest-timeline-comment-profile-photo"></div>
-                <div class="pull-left">{{comment.userName}}</div>
+                <div class="pull-left">{{comment.user.name}}</div>
                 <div class="pull-left quest-timeline-comment-content">{{comment.content}}</div>
-                <div class="pull-right">{{comment.commentDate | date:'yyyy-MM-dd HH:mm'}}</div>
+                <div class="pull-right">{{comment.createdAt | date:'yyyy-MM-dd HH:mm'}}</div>
                 <div class="clearfix"></div>
               </article>
             </li>

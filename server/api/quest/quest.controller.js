@@ -3,18 +3,31 @@
 var _ = require('lodash');
 var Quest = require('./quest.model');
 var QuestPool = require('../questPool/questPool.model');
+var Comment = require('../comment/comment.model');
 
 // Get list of quests
 exports.index = function(req, res) {
-
   Quest.find({ user : req.user._id})
     .limit(10).sort('-startDate')
     .populate('questPool')
     .populate('user')
     .populate('comments')
     .exec(function(err, quests){
-    if(err) { return handleError(res, err); }
     return res.json(200, quests);
+  });
+};
+
+var getComments = function(id, res){
+  console.log("id ===================" + id);
+  Comment.find({quest: id }, function (err, comment) {
+    if (err) {
+      return handleError(res, err);
+    }
+    if (!comment) {
+      return res.send(404);
+    }
+    console.log(comment);
+    return comment;
   });
 };
 
