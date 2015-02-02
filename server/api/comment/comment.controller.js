@@ -27,10 +27,8 @@ exports.create = function(req, res) {
   //needs = user : comment user / content : comment / quest : comment quest
 
   console.log(req.body.addTargetComment.content);
-  var comment;
   Comment.create({content : req.body.addTargetComment.content, user : req.body.user._id, quest : req.body._id }, function(err, comment) {
     if(err) { return handleError(res, err); }
-    comment = comment;
     getComment(comment, res);
    // return res.json(201, comment);
     Quest.findOne({_id : req.body._id}, function(err, quest){
