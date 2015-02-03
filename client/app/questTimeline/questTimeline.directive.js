@@ -8,15 +8,35 @@ angular.module('questApp')
       },
       replace: true,
       restrict: 'E',
-      controller: function($scope, $http){
+      controller: function($scope, $http, $window){
+        $scope.deleteComment = function(comment){
+          var options = $window.confirm('delete?');
 
-      /*  $http.get('/api/comments').success(function(data){
-          console.log(data);
-        });
-        $http.get('/api/comments/' + $scope.questTimelines[0]._id).success(function(data){
-          console.log(data);
-        });*/
+          //TODO 임시설정
+          if (options === true) {
+            $http.delete('/api/comments/' + comment._id)
+              .success(function(){
+                alert('success');
+                $window.location.reload();
+              }).error(function(err){
+                console.log(err);
+              });
+          } else {
+            console.log('cancel')
+          }
+        };
 
+        $scope.updateComment = function(comment){
+          console.log(comment);
+          //Update
+          $http.put('/api/comments/' + comment._id, comment)
+           .success(function(){
+            console.log('success');
+              $window.location.reload();
+           }).error(function(err){
+            console.log(err);
+           });
+        };
         $scope.addComment = function(questTimeline){
 
           $http.post('/api/comments', questTimeline)

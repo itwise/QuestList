@@ -23,21 +23,17 @@ exports.show = function(req, res) {
 
 // Creates a new comment in the DB.
 exports.create = function(req, res) {
-  //req timeline quest/ user/ quest pool/ comment
-  //needs = user : comment user / content : comment / quest : comment quest
-
-  console.log(req.body.addTargetComment.content);
   Comment.create({content : req.body.addTargetComment.content, user : req.body.user._id, quest : req.body._id }, function(err, comment) {
     if(err) { return handleError(res, err); }
-    getComment(comment, res);
    // return res.json(201, comment);
     Quest.findOne({_id : req.body._id}, function(err, quest){
       var comments = quest.comments;
-      comments.unshift(comment._id);
+      comments.push(comment._id);
       quest.save(function(err){
         console.log(err);
       });
     });
+    getComment(comment, res);
   });
 };
 
@@ -50,6 +46,7 @@ var getComment = function(comment, res){
 
 // Updates an existing comment in the DB.
 exports.update = function(req, res) {
+  req.body.user = req.body.user._id;
   if(req.body._id) { delete req.body._id; }
   Comment.findById(req.params.id, function (err, comment) {
     if (err) { return handleError(res, err); }

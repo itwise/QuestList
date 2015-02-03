@@ -41,9 +41,13 @@
             <li data-ng-repeat="comment in questTimeline.comments">
               <article class="quest-timeline-comment default-padding">
                 <div class="pull-left quest-timeline-comment-profile-photo"></div>
-                <div class="pull-left">{{comment.user.name}}</div>
-                <div class="pull-left quest-timeline-comment-content">{{comment.content}}</div>
-                <div class="pull-right">{{comment.createdAt | date:'yyyy-MM-dd HH:mm'}}</div>
+                <div class="pull-left"><a href="#">{{comment.user.name}}</a></div>
+                <div data-ng-show="comment.status !== 'edit'" class="pull-left quest-timeline-comment-content">{{comment.content}}</div>
+                <input data-ng-show="comment.status === 'edit'" type="text" class="form-control quest-comment-input" data-ng-model="comment.content">
+                <button data-ng-show="comment.status !== 'edit'" class="btn btn-raised btn-info pull-right" data-ng-click="comment.status = 'edit'" >edit</button>
+                <button class="btn btn-raised btn-danger pull-right" data-ng-click="deleteComment(comment,$event)" >X</button>
+                <button data-ng-show="comment.status === 'edit'" class="btn btn-raised btn-info pull-right" data-ng-click="updateComment(comment)" >save</button>
+                <div class="pull-right" data-ng-click="deleteComment(comment)">{{comment.createdAt | date:'yyyy-MM-dd HH:mm'}}</div>
                 <div class="clearfix"></div>
               </article>
             </li>

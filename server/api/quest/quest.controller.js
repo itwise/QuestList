@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var Quest = require('./quest.model');
 var QuestPool = require('../questPool/questPool.model');
+var Comment = require('../comment/comment.model');
 
 // Get list of quests
 exports.index = function(req, res) {
@@ -11,10 +12,16 @@ exports.index = function(req, res) {
     .limit(10).sort('-startDate')
     .populate('questPool')
     .populate('user')
-    .populate('comments')
+    .populate({ path : 'comments'})
     .exec(function(err, quests){
-    if(err) { return handleError(res, err); }
-    return res.json(200, quests);
+      if(err) { return handleError(res, err); }
+      var options = {
+        path : 'comments.user',
+        model : 'User'
+      };
+      Comment.populate(quests, options, function(err, questList){
+        return res.json(200, questList);
+      });
   });
 };
 
