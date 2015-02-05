@@ -64,10 +64,17 @@ exports.destroy = function(req, res) {
   Comment.findById(req.params.id, function (err, comment) {
     if(err) { return handleError(res, err); }
     if(!comment) { return res.send(404); }
-    comment.remove(function(err) {
-      if(err) { return handleError(res, err); }
-      return res.send(204);
-    });
+      comment.remove(function(err) {
+        if(err) { return handleError(res, err); }
+        Comment.find({ quest : comment.quest} , function(err, comments){
+          if(err) { return handleError(res, err); }
+          Quest.findOne({_id : comment.quest}, function(err, quest){
+            if(err) { return handleError(res, err); }
+            quest.comments = comments;
+            return res.send(204);
+          });
+        });
+      });
   });
 };
 

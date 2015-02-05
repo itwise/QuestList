@@ -60,11 +60,13 @@ var questCreate = function(quest, res){
 
 // Updates an existing quest in the DB.
 exports.update = function(req, res) {
+  console.log(req.body.user);
   if(req.body._id) { delete req.body._id; }
   Quest.findById(req.params.id, function (err, quest) {
     if (err) { return handleError(res, err); }
     if(!quest) { return res.send(404); }
-    var updated = _.merge(quest, req.body);
+    var updated = _.merge(quest, { content : req.body.content });
+    console.log(updated);
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
       return res.json(200, quest);
@@ -77,10 +79,21 @@ exports.destroy = function(req, res) {
   Quest.findById(req.params.id, function (err, quest) {
     if(err) { return handleError(res, err); }
     if(!quest) { return res.send(404); }
-    quest.remove(function(err) {
-      if(err) { return handleError(res, err); }
-      return res.send(204);
+      //quest remove
+      quest.remove(function(err) {
+        if(err) { return handleError(res, err); }
+          //remove comments in quest
+          Comment.find({ quest : req.params.id }, function(err, comments){
+            comments.forEach(function(comment){
+              comment.remove(function(err){
+                if(err) { return handleError(res, err); }
+                console.log(err);
+                return res.send(204);
+            });
+          });
+        });
     });
+
   });
 };
 

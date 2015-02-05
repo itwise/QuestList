@@ -50,6 +50,25 @@ angular.module('questApp')
 
         };
 
+        $scope.editQuestTimeline = function(questTimeLine){
+          console.log(questTimeLine);
+          $http.put('/api/quests/' + questTimeLine._id, questTimeLine)
+            .success(function(quest){
+              console.log(quest);
+            }).error(function(err){
+              console.log(err);
+            });
+        };
+
+        $scope.deleteQeustTimeline = function(questTimeLine){
+          $http.delete('/api/quests/' + questTimeLine._id)
+            .success(function(){
+
+            }).error(function(err){
+              console.log(err);
+            });
+        };
+
       },
       templateUrl: 'app/questTimeline/questTimeline.html'
     };

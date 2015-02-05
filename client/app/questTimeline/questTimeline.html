@@ -17,7 +17,16 @@
           {{questTimeline.quest.status}}하셨습니다.
         </div>
         <div class="col-sm-12">
-          <p>
+          <div data-ng-show="questTimeline.status !== 'edit'" class="btn-group pull-right custom-button-area">
+            <button class="btn btn-xs btn-info custom-icon" data-ng-click="questTimeline.status = 'edit'">수정</button>
+            <button class="btn btn-xs btn-danger custom-icon" data-ng-click="deleteQeustTimeline(questTimeline)">삭제</button>
+          </div>
+          <div data-ng-show="questTimeline.status === 'edit'" class="btn-group pull-right custom-button-area">
+            <button class="btn btn-xs btn-info custom-icon" data-ng-click="editQuestTimeline(questTimeline)">저장</button>
+            <button class="btn btn-xs btn-danger custom-icon" data-ng-click="questTimeline.status='cancel'">취소</button>
+          </div>
+          <input data-ng-show="questTimeline.status === 'edit'"  class="form-control" type="text" data-ng-model="questTimeline.content" />
+          <p data-ng-show="questTimeline.status !== 'edit'">
             {{questTimeline.content}}
           </p>
         </div>
@@ -33,7 +42,7 @@
         </div>
         <div class="col-sm-12 quest-timeline-interaction-wrapper">
           <div class="pull-left"></div>
-          <div class="pull-right"><button class="btn btn-fab btn-raised btn-material-indigo "><i class="mdi-action-thumb-up"></i></button></div>
+          <div class="pull-right"><button class="btn btn-fab btn-raised btn-material-indigo"><i class="mdi-action-thumb-up"></i></button></div>
         </div>
         <div class="col-sm-12 quest-timeline-comment-wrapper no-padding">
           <hr/>
@@ -46,8 +55,9 @@
                 <input data-ng-show="comment.status === 'edit'" type="text" class="form-control quest-comment-input" data-ng-model="comment.content">
                 <div class="btn-group pull-right custom-button-area">
                   <button data-ng-show="comment.status !== 'edit'" class="btn btn-xs btn-info custom-icon" data-ng-click="comment.status = 'edit'" >edit</button>
-                  <button class="btn btn-xs btn-danger custom-icon" data-ng-click="deleteComment(comment,$event)" >X</button>
+                  <button data-ng-show="comment.status !== 'edit'" class="btn btn-xs btn-danger custom-icon" data-ng-click="deleteComment(comment,$event)" >X</button>
                   <button data-ng-show="comment.status === 'edit'" class="btn btn-xs btn-info custom-icon" data-ng-click="updateComment(comment)" >save</button>
+                  <button data-ng-show="comment.status === 'edit'" class="btn btn-xs btn-danger custom-icon" data-ng-click="comment.status = 'cancel'" >cancel</button>
                 </div>
                 <div class="pull-right">{{comment.createdAt | date:'yyyy-MM-dd HH:mm'}}</div>
                 <div class="clearfix"></div>
