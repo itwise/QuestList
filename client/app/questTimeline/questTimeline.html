@@ -25,14 +25,14 @@
             {{questTimeline.content}}
           </p>
         </div>
-        <div data-ng-show="questTimeline.edit !== 'edit'" class="col-sm-12 quest-tags">
+        <div data-ng-show="questTimelineedits !== 'edit'" class="col-sm-12 quest-tags">
           <ul class="list-inline">
             <li data-ng-repeat="tag in questTimeline.questPool.tags">
               <a href="#">#{{tag}}</a>
             </li>
           </ul>
         </div>
-        <div data-ng-show="questTimeline.edit === 'edit'" class="row" data-ng-model="quest">
+        <div data-ng-show="questTimelineedits === 'edit'" class="row" data-ng-model="quest">
           <div class="col-sm-12 form-group">
             <input type="text" class="form-control" data-ng-model="questTimeline.questPool.title"/>
           </div>
@@ -49,9 +49,9 @@
               <input type="text" class="form-control" data-ng-model="questTimeline.editTags"/>
             </div>
           </div>
-          <div data-ng-show="questTimeline.edit === 'edit'" class="btn-group pull-right custom-button-area">
+          <div data-ng-show="questTimelineedits === 'edit'" class="btn-group pull-right custom-button-area">
             <button class="btn btn-xs btn-info custom-icon" data-ng-click="modifyTimeline(questTimeline)">저장</button>
-            <button class="btn btn-xs btn-danger custom-icon" data-ng-click="questTimeline.edit='cancel'">취소</button>
+            <button class="btn btn-xs btn-danger custom-icon" data-ng-click="questTimelineedits='cancel'">취소</button>
           </div>
         </div>
         <div class="col-sm-12" data-ng-show="questTimeline.comments.length > 0">

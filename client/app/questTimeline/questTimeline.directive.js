@@ -8,7 +8,9 @@ angular.module('questApp')
       },
       replace: true,
       restrict: 'E',
-      controller: function($scope, $http, $window){
+      controller: function($scope, $http, $window, Auth){
+        $scope.currentUser = Auth.getCurrentUser();
+
         $scope.deleteComment = function(comment){
           var options = $window.confirm('delete?');
 
