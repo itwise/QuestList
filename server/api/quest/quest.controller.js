@@ -66,7 +66,7 @@ exports.update = function(req, res) {
   Quest.findById(req.params.id, function (err, quest) {
     if (err) { return handleError(res, err); }
     if(!quest) { return res.send(404); }
-    var updated = _.merge(quest, { content : req.body.content });
+    var updated = _.merge(quest, { content : req.body.content, status : req.body.status });
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
       QuestPool.findById(quest.questPool, function(err, questPool){

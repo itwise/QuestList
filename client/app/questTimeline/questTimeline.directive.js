@@ -110,6 +110,16 @@ angular.module('questApp')
             });
         };
 
+        $scope.changeStatus = function(questTimeline){
+          questTimeline.status = 'END';
+          $http.put('/api/quests/' + questTimeline._id, questTimeline)
+            .success(function(quest){
+              console.log(quest);
+            }).error(function(err){
+              console.log(err);
+            });
+        };
+
       },
       templateUrl: 'app/questTimeline/questTimeline.html'
     };
