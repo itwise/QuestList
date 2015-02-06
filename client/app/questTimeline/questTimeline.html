@@ -9,30 +9,30 @@
           <div class="quest-progress-user-profile-photo" style="background-image:url('{{questTimeline.user.profileImage}}')">
           </div>
         </div>
-        <div data-ng-show="questTimeline.status !== 'edit'" class="col-sm-10">
+        <div data-ng-show="questTimeline.edit !== 'edit'" class="col-sm-10">
           <strong>
             <a href="" data-ui-sref="profile({userId: questTimeline.user._id})">{{questTimeline.user.name}}</a>
           </strong>님이
-          <span class="quest-progress-name">{{questTimeline.questPool.title}}</span><strong>{{getConnectingWord(questTimeline.questPool.title)}}</strong>
-          {{questTimeline.quest.status}}하셨습니다.
+          <span class="quest-progress-name">" {{questTimeline.questPool.title}} "</span><strong>{{getConnectingWord(questTimeline.questPool.title)}}</strong>
+          <strong> {{questTimeline.status}} </strong>하셨습니다.
         </div>
         <div class="col-sm-12">
-          <div data-ng-show="questTimeline.status !== 'edit'" class="btn-group pull-right custom-button-area">
+          <div data-ng-show="questTimeline.edit !== 'edit'" class="btn-group pull-right custom-button-area">
             <button class="btn btn-xs btn-info custom-icon" data-ng-click="getPrintEditData(questTimeline)">수정</button>
             <button class="btn btn-xs btn-danger custom-icon" data-ng-click="deleteQeustTimeline(questTimeline)">삭제</button>
           </div>
-          <p data-ng-show="questTimeline.status !== 'edit'">
+          <p data-ng-show="questTimeline.edit !== 'edit'">
             {{questTimeline.content}}
           </p>
         </div>
-        <div data-ng-show="questTimeline.status !== 'edit'" class="col-sm-12 quest-tags">
+        <div data-ng-show="questTimeline.edit !== 'edit'" class="col-sm-12 quest-tags">
           <ul class="list-inline">
             <li data-ng-repeat="tag in questTimeline.questPool.tags">
               <a href="#">#{{tag}}</a>
             </li>
           </ul>
         </div>
-        <div data-ng-show="questTimeline.status === 'edit'" class="row" data-ng-model="quest">
+        <div data-ng-show="questTimeline.edit === 'edit'" class="row" data-ng-model="quest">
           <div class="col-sm-12 form-group">
             <input type="text" class="form-control" data-ng-model="questTimeline.questPool.title"/>
           </div>
@@ -49,9 +49,9 @@
               <input type="text" class="form-control" data-ng-model="questTimeline.editTags"/>
             </div>
           </div>
-          <div data-ng-show="questTimeline.status === 'edit'" class="btn-group pull-right custom-button-area">
+          <div data-ng-show="questTimeline.edit === 'edit'" class="btn-group pull-right custom-button-area">
             <button class="btn btn-xs btn-info custom-icon" data-ng-click="modifyTimeline(questTimeline)">저장</button>
-            <button class="btn btn-xs btn-danger custom-icon" data-ng-click="questTimeline.status='cancel'">취소</button>
+            <button class="btn btn-xs btn-danger custom-icon" data-ng-click="questTimeline.edit='cancel'">취소</button>
           </div>
         </div>
         <div class="col-sm-12" data-ng-show="questTimeline.comments.length > 0">

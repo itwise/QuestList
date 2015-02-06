@@ -27,7 +27,7 @@ angular.module('questApp')
         };
 
         $scope.getPrintEditData = function(questTimeline){
-          questTimeline.status = 'edit';
+          questTimeline.edit = 'edit';
           console.log(questTimeline.questPool.tags.length);
           if(questTimeline.questPool.tags.length === 0){
             return;
