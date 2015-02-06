@@ -82,8 +82,8 @@
             </li>
           </ul>
           <div class="col-sm-12 quest-timeline-comment-input-wrapper default-padding">
-            <div class="pull-left quest-timeline-comment-profile-photo"></div>
-            <input type="text" class="form-control quest-comment-input" data-ng-model="questTimeline.addTargetComment.content">
+            <div class="pull-left quest-timeline-comment-profile-photo" data-ng-style="{'background-image':'url(' + currentUser.profileImage + ')'}"></div>
+            <input type="text" class="form-control quest-comment-input" data-ng-model="questTimeline.addTargetComment.content" >
             <button class="btn btn-info pull-right" data-ng-click="addComment(questTimeline)">댓글달기</button>
           </div>
         </div>

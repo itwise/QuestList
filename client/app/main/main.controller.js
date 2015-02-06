@@ -20,16 +20,22 @@ angular.module('questApp')
     ];
 
     $scope.addQuest = function(quest){
-      var splitTagList = quest.tags.split('#');
 
-      if(splitTagList.length <= 1){
-        alert("Not found '#'");
-        return;
+      var splitTagList;
+      if(quest.tags !== undefined){
+        splitTagList = quest.tags.split('#');
+
+        if(splitTagList.length <= 1) {
+          alert("Not found '#'");
+          return;
+        }
+
+        splitTagList.shift();
+
+        quest.tags = splitTagList;
       }
 
-      splitTagList.shift();
-
-      quest.tags = splitTagList;
+      console.log(quest);
       $http.post('/api/quests', quest).success(function(data, status, headers, config){
         $window.location.reload();
       }).error(function(data, status, headers, config){

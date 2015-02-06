@@ -43,6 +43,7 @@ exports.create = function(req, res) {
       insertData.questPool = result._id;
       questCreate(insertData, res);
     }else{
+      console.log(req.body.tags);
       QuestPool.create({title : req.body.title, tags: req.body.tags}, function(err, questPool){
         insertData.questPool = questPool._id;
         questCreate(insertData, res);
@@ -71,7 +72,7 @@ exports.update = function(req, res) {
       QuestPool.findById(quest.questPool, function(err, questPool){
         if (err) { return handleError(res, err); }
         if(!questPool) { return res.send(404); }
-        var updatedQuestPool = _.merge(questPool, { title : req.body.questPool, tags : req.body.questPool.tags } );
+        var updatedQuestPool = _.merge(questPool, { title : req.body.questPool.title, tags : req.body.questPool.tags } );
         updatedQuestPool.save(function (err) {
           if (err) { return handleError(res, err); }
           return res.json(200, questPool);
@@ -94,10 +95,10 @@ exports.destroy = function(req, res) {
             comments.forEach(function(comment){
               comment.remove(function(err){
                 if(err) { return handleError(res, err); }
-                console.log(err);
-                return res.send(204);
             });
           });
+            res.end();
+            return res.send(204);
         });
     });
 

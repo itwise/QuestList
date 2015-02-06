@@ -75,12 +75,18 @@ angular.module('questApp')
         };
 
         $scope.deleteQeustTimeline = function(questTimeLine){
-          $http.delete('/api/quests/' + questTimeLine._id)
-            .success(function(){
+          var options = $window.confirm('delete?');
 
-            }).error(function(err){
-              console.log(err);
-            });
+          if(options === true){
+            $http.delete('/api/quests/' + questTimeLine._id)
+              .success(function(){
+                alert('success');
+                $window.location.reload();
+              }).error(function(err){
+                console.log(err);
+              });
+          }
+
         };
 
         $scope.modifyTimeline = function(questTimeline){
@@ -96,7 +102,7 @@ angular.module('questApp')
           console.log(questTimeline);
           $http.put('/api/quests/' + questTimeline._id, questTimeline)
             .success(function(){
-
+              $window.location.reload();
             }).error(function(err){
               console.log(err);
             });
