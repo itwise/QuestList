@@ -60,16 +60,23 @@ var questCreate = function(quest, res){
 
 // Updates an existing quest in the DB.
 exports.update = function(req, res) {
-  console.log(req.body.user);
   if(req.body._id) { delete req.body._id; }
+
   Quest.findById(req.params.id, function (err, quest) {
     if (err) { return handleError(res, err); }
     if(!quest) { return res.send(404); }
     var updated = _.merge(quest, { content : req.body.content });
-    console.log(updated);
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
-      return res.json(200, quest);
+      QuestPool.findById(quest.questPool, function(err, questPool){
+        if (err) { return handleError(res, err); }
+        if(!questPool) { return res.send(404); }
+        var updatedQuestPool = _.merge(questPool, { title : req.body.questPool, tags : req.body.questPool.tags } );
+        updatedQuestPool.save(function (err) {
+          if (err) { return handleError(res, err); }
+          return res.json(200, questPool);
+        });
+      });
     });
   });
 };

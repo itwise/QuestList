@@ -9,7 +9,7 @@
           <div class="quest-progress-user-profile-photo" style="background-image:url('{{questTimeline.user.profileImage}}')">
           </div>
         </div>
-        <div class="col-sm-10">
+        <div data-ng-show="questTimeline.status !== 'edit'" class="col-sm-10">
           <strong>
             <a href="" data-ui-sref="profile({userId: questTimeline.user._id})">{{questTimeline.user.name}}</a>
           </strong>님이
@@ -18,24 +18,41 @@
         </div>
         <div class="col-sm-12">
           <div data-ng-show="questTimeline.status !== 'edit'" class="btn-group pull-right custom-button-area">
-            <button class="btn btn-xs btn-info custom-icon" data-ng-click="questTimeline.status = 'edit'">수정</button>
+            <button class="btn btn-xs btn-info custom-icon" data-ng-click="getPrintEditData(questTimeline)">수정</button>
             <button class="btn btn-xs btn-danger custom-icon" data-ng-click="deleteQeustTimeline(questTimeline)">삭제</button>
           </div>
-          <div data-ng-show="questTimeline.status === 'edit'" class="btn-group pull-right custom-button-area">
-            <button class="btn btn-xs btn-info custom-icon" data-ng-click="editQuestTimeline(questTimeline)">저장</button>
-            <button class="btn btn-xs btn-danger custom-icon" data-ng-click="questTimeline.status='cancel'">취소</button>
-          </div>
-          <input data-ng-show="questTimeline.status === 'edit'"  class="form-control" type="text" data-ng-model="questTimeline.content" />
           <p data-ng-show="questTimeline.status !== 'edit'">
             {{questTimeline.content}}
           </p>
         </div>
-        <div class="col-sm-12 quest-tags">
+        <div data-ng-show="questTimeline.status !== 'edit'" class="col-sm-12 quest-tags">
           <ul class="list-inline">
             <li data-ng-repeat="tag in questTimeline.questPool.tags">
               <a href="#">#{{tag}}</a>
             </li>
           </ul>
+        </div>
+        <div data-ng-show="questTimeline.status === 'edit'" class="row" data-ng-model="quest">
+          <div class="col-sm-12 form-group">
+            <input type="text" class="form-control" data-ng-model="questTimeline.questPool.title"/>
+          </div>
+          <div class="col-sm-12 form-group">
+            <textarea class="form-control" data-ng-model="questTimeline.content"></textarea>
+          </div>
+          <div class="col-sm-12 form-group">
+            <label class="col-sm-1">
+                  <span class="quest-tag-icon">
+                    <i class="mdi-maps-local-offer"></i>
+                  </span>
+            </label>
+            <div class="col-sm-11 quest-tag-wrapper">
+              <input type="text" class="form-control" data-ng-model="questTimeline.editTags"/>
+            </div>
+          </div>
+          <div data-ng-show="questTimeline.status === 'edit'" class="btn-group pull-right custom-button-area">
+            <button class="btn btn-xs btn-info custom-icon" data-ng-click="modifyTimeline(questTimeline)">저장</button>
+            <button class="btn btn-xs btn-danger custom-icon" data-ng-click="questTimeline.status='cancel'">취소</button>
+          </div>
         </div>
         <div class="col-sm-12" data-ng-show="questTimeline.comments.length > 0">
           {{questTimeline.comments.length}}개의 댓글

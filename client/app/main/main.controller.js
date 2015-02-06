@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('questApp')
-  .controller('MainCtrl', function ($scope, Auth, $http) {
+  .controller('MainCtrl', function ($scope, Auth, $http, $window) {
 
     $http.get('/api/quests').success(function(data){
       console.log(data);
@@ -20,8 +20,18 @@ angular.module('questApp')
     ];
 
     $scope.addQuest = function(quest){
-      $http.post('/api/quests', quest).success(function(data, status, headers, config){
+      var splitTagList = quest.tags.split('#');
 
+      if(splitTagList.length <= 1){
+        alert("Not found '#'");
+        return;
+      }
+
+      splitTagList.shift();
+
+      quest.tags = splitTagList;
+      $http.post('/api/quests', quest).success(function(data, status, headers, config){
+        $window.location.reload();
       }).error(function(data, status, headers, config){
 
       });

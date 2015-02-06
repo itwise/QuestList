@@ -26,6 +26,20 @@ angular.module('questApp')
           }
         };
 
+        $scope.getPrintEditData = function(questTimeline){
+          questTimeline.status = 'edit';
+          console.log(questTimeline.questPool.tags.length);
+          if(questTimeline.questPool.tags.length === 0){
+            return;
+          }
+          var tags = '';
+
+          for(var i = 0 ; i < questTimeline.questPool.tags.length; i++){
+            tags += '#' + questTimeline.questPool.tags[i];
+          }
+          questTimeline.editTags = tags;
+        };
+
         $scope.updateComment = function(comment){
           console.log(comment);
           //Update
@@ -62,6 +76,25 @@ angular.module('questApp')
 
         $scope.deleteQeustTimeline = function(questTimeLine){
           $http.delete('/api/quests/' + questTimeLine._id)
+            .success(function(){
+
+            }).error(function(err){
+              console.log(err);
+            });
+        };
+
+        $scope.modifyTimeline = function(questTimeline){
+          var splitTagList = questTimeline.editTags.split('#');
+          if(splitTagList.length <= 1){
+            alert("Not found '#'");
+            return;
+          }
+
+          splitTagList.shift();
+          questTimeline.questPool.tags = splitTagList;
+
+          console.log(questTimeline);
+          $http.put('/api/quests/' + questTimeline._id, questTimeline)
             .success(function(){
 
             }).error(function(err){
