@@ -92,26 +92,36 @@ angular.module('questApp')
         };
 
         $scope.modifyTimeline = function(questTimeline){
-          var splitTagList = questTimeline.editTags.split('#');
-          if(splitTagList.length <= 1){
-            alert("Not found '#'");
-            return;
-          }
-
-          splitTagList.shift();
-          questTimeline.questPool.tags = splitTagList;
-
+          var splitTagList;
           console.log(questTimeline);
-          $http.put('/api/quests/' + questTimeline._id, questTimeline)
-            .success(function(){
-              $window.location.reload();
-            }).error(function(err){
-              console.log(err);
-            });
+          if(questTimeline.editTags !== undefined && questTimeline.editTags !== "" ){
+            splitTagList = questTimeline.editTags.split('#');
+
+            console.log(splitTagList);
+            if(splitTagList.length <= 1) {
+              alert("Not found '#'");
+              return;
+            }
+
+            splitTagList.shift();
+
+            questTimeline.questPool.tags = splitTagList;
+          }else{
+            questTimeline.questPool.tags = [];
+          }
+          console.log(questTimeline);
+       /*  $http.put('/api/quests/' + questTimeline._id, questTimeline)
+           .success(function(){
+             $window.location.reload();
+           }).error(function(err){
+             console.log(err);
+           });*/
         };
 
         $scope.changeStatus = function(questTimeline){
           questTimeline.status = 'END';
+          questTimeline.completeDate = new Date();
+          console.log(questTimeline);
           $http.put('/api/quests/' + questTimeline._id, questTimeline)
             .success(function(quest){
               console.log(quest);

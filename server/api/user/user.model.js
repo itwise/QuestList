@@ -20,7 +20,8 @@ var UserSchema = new Schema({
   twitter: {},
   google: {},
   github: {},
-  kakao: {}
+  kakao: {},
+  friends: [String]
 });
 
 /**

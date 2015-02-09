@@ -66,14 +66,17 @@ exports.update = function(req, res) {
   Quest.findById(req.params.id, function (err, quest) {
     if (err) { return handleError(res, err); }
     if(!quest) { return res.send(404); }
-    var updated = _.merge(quest, { content : req.body.content, status : req.body.status });
+    var updated = _.merge(quest, { content : req.body.content, status : req.body.status, completeDate : req.body.completeDate });
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
       QuestPool.findById(quest.questPool, function(err, questPool){
         if (err) { return handleError(res, err); }
         if(!questPool) { return res.send(404); }
+        console.log(questPool);
         var updatedQuestPool = _.merge(questPool, { title : req.body.questPool.title, tags : req.body.questPool.tags } );
         updatedQuestPool.save(function (err) {
+          //TODO tags
+          console.log(questPool);
           if (err) { return handleError(res, err); }
           return res.json(200, questPool);
         });

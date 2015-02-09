@@ -36,11 +36,11 @@ angular.module('questApp')
       }
 
       console.log(quest);
-      $http.post('/api/quests', quest).success(function(data, status, headers, config){
+     /* $http.post('/api/quests', quest).success(function(data, status, headers, config){
         $window.location.reload();
       }).error(function(data, status, headers, config){
 
-      });
+      });*/
     };
 
     $scope.getConnectingWord = function(word){

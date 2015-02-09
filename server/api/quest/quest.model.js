@@ -11,7 +11,7 @@ var QuestSchema = new Schema({
   },
   completeDate: {
     type: Date,
-    default: Date.now
+    required : false
   },
   status: {
     type: String,
