@@ -62,16 +62,24 @@ var questCreate = function(quest, res){
 // Updates an existing quest in the DB.
 exports.update = function(req, res) {
   if(req.body._id) { delete req.body._id; };
-  //TODO Quest 관련 update 추가
-  QuestPool.update({_id: req.body.questPool._id}, {
-    $set:{
-      title : req.body.questPool.title,
-      tags : req.body.questPool.tags
-    }
-  }, function(err){
 
+  Quest.findById(req.params.id, function (err, quest) {
     if (err) { return handleError(res, err); }
-    return res.json(200, questPool);
+    if(!quest) { return res.send(404); }
+    var updated = _.merge(quest, { content : req.body.content, status : req.body.status, completeDate : req.body.completeDate });
+    updated.save(function (err) {
+      if (err) { return handleError(res, err); }
+      QuestPool.update({_id: req.body.questPool._id}, {
+        $set:{
+          title : req.body.questPool.title,
+          tags : req.body.questPool.tags
+        }
+      }, function(err, questPool){
+        if (err) { return handleError(res, err); }
+        console.log(err);
+        return res.send(204);
+      });
+    });
   });
 };
 

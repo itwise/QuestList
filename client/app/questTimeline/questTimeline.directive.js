@@ -93,7 +93,7 @@ angular.module('questApp')
 
         $scope.modifyTimeline = function(questTimeline){
           var splitTagList;
-          console.log(questTimeline);
+
           if(questTimeline.editTags !== undefined && questTimeline.editTags !== "" ){
             splitTagList = questTimeline.editTags.split('#');
 
@@ -102,14 +102,13 @@ angular.module('questApp')
               alert("Not found '#'");
               return;
             }
-
             splitTagList.shift();
 
             questTimeline.questPool.tags = splitTagList;
           }else{
             questTimeline.questPool.tags = [];
           }
-          console.log(questTimeline);
+
          $http.put('/api/quests/' + questTimeline._id, questTimeline)
            .success(function(){
              $window.location.reload();
