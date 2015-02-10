@@ -46,13 +46,15 @@ var getComment = function(comment, res){
 
 // Updates an existing comment in the DB.
 exports.update = function(req, res) {
-  var userId = req.body.user._id;
-  req.body.user = userId;
+
   if(req.body._id) { delete req.body._id; }
+
   Comment.findById(req.params.id, function (err, comment) {
     if (err) { return handleError(res, err); }
     if(!comment) { return res.send(404); }
-    var updated = _.merge(comment, req.body);
+
+    var updated = _.merge(comment, { content : req.body.content });
+
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
       return res.json(200, comment);

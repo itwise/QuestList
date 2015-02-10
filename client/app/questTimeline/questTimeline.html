@@ -14,8 +14,8 @@
             <a href="" data-ui-sref="profile({userId: questTimeline.user._id})">{{questTimeline.user.name}}</a>
           </strong>님이
           <span class="quest-progress-name">" {{questTimeline.questPool.title}} "</span><strong>{{getConnectingWord(questTimeline.questPool.title)}}</strong>
-          <strong data-ng-show="questTimeline.status === 'START'"> 시작 </strong>
-          <strong data-ng-show="questTimeline.status === 'END'"> 완료 </strong>하셨습니다.
+          <strong class="text-success" data-ng-show="questTimeline.status === 'START'"> 시작 </strong>
+          <strong class="text-warning" data-ng-show="questTimeline.status === 'END'"> 완료 </strong>하셨습니다.
         </div>
         <div class="col-sm-12">
           <div data-ng-show="questTimeline.edit !== 'edit'" class="btn-group pull-right custom-button-area">
