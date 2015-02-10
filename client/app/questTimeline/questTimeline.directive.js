@@ -110,12 +110,12 @@ angular.module('questApp')
             questTimeline.questPool.tags = [];
           }
           console.log(questTimeline);
-       /*  $http.put('/api/quests/' + questTimeline._id, questTimeline)
+         $http.put('/api/quests/' + questTimeline._id, questTimeline)
            .success(function(){
              $window.location.reload();
            }).error(function(err){
              console.log(err);
-           });*/
+           });
         };
 
         $scope.changeStatus = function(questTimeline){
