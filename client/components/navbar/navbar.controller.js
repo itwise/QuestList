@@ -3,7 +3,7 @@
 angular.module('questApp')
   .controller('NavbarCtrl', function ($scope, $location, Auth) {
     $scope.menu = [{
-      'title': 'My Quest',
+      'title': 'My ',
       'link': '/profile/me'
     },{
       'title': 'Quest Time Line',

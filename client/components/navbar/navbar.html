@@ -21,7 +21,8 @@
         <li ng-show="isLoggedIn()"><img class="navbar-profile-image" ng-src="{{currentUser.profileImage}}" alt=""/></li>
         <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/signup')}"><a href="/signup">Sign up</a></li>
         <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/login')}"><a href="/login">Login</a></li>
-        <li ng-show="isLoggedIn()"><p class="navbar-text">{{ currentUser.name }}</p> </li>
+        <li ng-show="isLoggedIn()" ng-class="{active: isActive('/profile/me')}"><a href="/profile/me">{{ currentUser.name }}</a></li>
+        <li ng-show="isLoggedIn()" ng-class="{active: isActive('/friends')}"><a href="/settings"><span class="large mdi-social-person-add"></span></a></li>
         <li ng-show="isLoggedIn()" ng-class="{active: isActive('/settings')}"><a href="/settings"><span class="glyphicon glyphicon-cog"></span></a></li>
         <li ng-show="isLoggedIn()" ng-class="{active: isActive('/logout')}"><a href="" ng-click="logout()">Logout</a></li>
       </ul>
