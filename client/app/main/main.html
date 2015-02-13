@@ -9,7 +9,7 @@
           <div class="panel-body">
             <div class="quest-user-profile-photo pull-left" data-ng-style="{'background-image':'url(' + currentUser.profileImage + ')'}"></div>
             <div class="pull-right">
-              {{currentUser.name}}
+              <a href="/profile/me">{{currentUser.name}}</a>
             </div>
           </div>
         </div>
@@ -58,29 +58,23 @@
     </div>
 
     <div class="col-sm-3">
-      <div class="col-sm-12">
-        <aside class="panel panel-default">
-          <header class="panel-heading">수행가능한 퀘스트</header>
-          <section class="panel-body">
-            <ul class="list-unstyled">
-              <li>베이스 다운피킹 10분 연습하기</li>
-              <li>베이스 핑거링 10분 연습하기</li>
-            </ul>
-          </section>
-        </aside>
+      <div class="quest-panel col-sm-12">
+        <h4>수행가능한 퀘스트</h4>
+        <ul class="list-unstyled">
+          <li>그저그런 퀘스트</li>
+          <li>일리단 때려잡기</li>
+        </ul>
       </div>
-      <div class="col-sm-12">
-        <aside class="panel panel-default">
-          <header class="panel-heading">진행 중인 퀘스트</header>
-          <section class="panel-body">
-            <div class="well" data-ng-show="nowProgressQuests.length === 0">
-              현재 진행 중인 퀘스트가 없습니다.
-            </div>
-            <ul class="list-unstyled">
-              <li data-ng-repeat="nowProgressQuest in nowProgressQuests"></li>
-            </ul>
-          </section>
-        </aside>
+      <div class="quest-panel col-sm-12">
+        <h4>진행 중인 퀘스트</h4>
+        <div class="well" data-ng-show="nowProgressQuests.length === 0">
+          <strong class="text-success"> 현재 진행 중인 퀘스트가 없습니다. </strong>
+        </div>
+        <ul class="list-unstyled">
+          <li data-ng-repeat="nowProgressQuest in nowProgressQuests">
+            <strong class="text-info">{{nowProgressQuest.questPool.title}}</strong>
+          </li>
+        </ul>
       </div>
     </div>
   </div>

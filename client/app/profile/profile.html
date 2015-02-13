@@ -3,25 +3,72 @@
 <section class="main-container container">
   <div class="quest-wrapper col-sm-12">
     <div class="col-sm-3">
-      <aside class="quest-panel col-sm-12">
-        <h4>Profile</h4>
-        <div class="quest-user-profile-photo pull-left" data-ng-style="{'background-image':'url(' + currentUser.profileImage + ')'}">
-
-        </div>
-        <div class="pull-right">
-          {{user.name}}
+      <aside class="col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">Profile</div>
+          <div class="panel-body">
+            <div class="quest-user-profile-photo pull-left" data-ng-style="{'background-image':'url(' + currentUser.profileImage + ')'}"></div>
+            <div class="pull-right">
+              <a href="/profile/me">{{currentUser.name}}</a>
+            </div>
+          </div>
         </div>
       </aside>
-      <aside class="quest-panel col-sm-12">
-        <h4>퀘스트 수행 랭킹</h4>
-        <ul class="list-unstyled">
-
-        </ul>
+      <aside class="col-sm-12">
+        <div class="panel panel-default">
+          <header class="panel-heading">퀘스트 수행 랭킹</header>
+          <div class="panel-body">
+            <ul class="list-unstyled">
+              TODO...
+            </ul>
+          </div>
+        </div>
+      </aside>
+      <aside class="col-sm-12">
+        <div class="panel panel-default">
+          <header class="panel-heading">친구목록</header>
+          <div class="panel-body">
+            <ul class="list-unstyled">
+              <li><a href="#">user_01</a></li>
+              <li><a href="#">user_02</a></li>
+              <li><a href="#">user_03</a></li>
+            </ul>
+          </div>
+        </div>
       </aside>
     </div>
+
     <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row" data-ng-model="quest">
+            <div class="col-sm-12 form-group">
+              <input type="text" class="form-control" data-ng-model="quest.title" placeholder="퀘스트 이름이 어떻게 되나요?"/>
+            </div>
+            <div class="col-sm-12 form-group">
+              <textarea class="form-control" placeholder="어떤 퀘스트인가요?" data-ng-model="quest.content"></textarea>
+            </div>
+            <div class="col-sm-12 form-group">
+              <label class="col-sm-1">
+                  <span class="quest-tag-icon">
+                    <i class="mdi-maps-local-offer"></i>
+                  </span>
+              </label>
+              <div class="col-sm-11 quest-tag-wrapper">
+                <input type="text" class="form-control" data-ng-model="quest.tags"/>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 text-right">
+              <button class="btn btn-fab btn-raised btn-material-lightblue" data-ng-click="addQuest(quest)"><i class="mdi-editor-border-color"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
       <quest-timeline data-quest-timelines="questTimelines"></quest-timeline>
     </div>
+
     <div class="col-sm-3">
       <div class="quest-panel col-sm-12">
         <h4>수행가능한 퀘스트</h4>
@@ -31,12 +78,14 @@
         </ul>
       </div>
       <div class="quest-panel col-sm-12">
-        <h4>진행 중인 퀘스트</h4>
+        <h4>진행 중인 퀘스트 {{nowProgressQuests.length}}</h4>
         <div class="well" data-ng-show="nowProgressQuests.length === 0">
           현재 진행 중인 퀘스트가 없습니다.
         </div>
         <ul class="list-unstyled">
-          <li data-ng-repeat="nowProgressQuest in nowProgressQuests"></li>
+          <li data-ng-repeat="nowProgressQuest in nowProgressQuests">
+            <strong>{{nowProgressQuest.questPool.title}}</strong>
+          </li>
         </ul>
       </div>
     </div>

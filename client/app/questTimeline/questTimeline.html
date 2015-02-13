@@ -13,7 +13,7 @@
           <strong>
             <a href="" data-ui-sref="profile({userId: questTimeline.user._id})">{{questTimeline.user.name}}</a>
           </strong>님이
-          <span class="quest-progress-name">" {{questTimeline.questPool.title}} "</span><strong>{{getConnectingWord(questTimeline.questPool.title)}}</strong>
+          <strong class="quest-progress-name">"{{questTimeline.questPool.title}}"</strong><strong>{{getConnectingWord(questTimeline.questPool.title)}}</strong>
           <strong class="text-success" data-ng-show="questTimeline.status === 'START'"> 시작 </strong>
           <strong class="text-warning" data-ng-show="questTimeline.status === 'END'"> 완료 </strong>하셨습니다.
         </div>
@@ -64,6 +64,11 @@
         </div>
         <div class="col-sm-12 quest-timeline-comment-wrapper no-padding">
           <hr/>
+          <div data-ng-show="questTimeline.like.length !== 0 " class="row">
+            <div class="col-sm-9">
+              <small>n 명이 좋아합니다. </small>
+            </div>
+          </div>
           <ul class="list-unstyled">
             <li data-ng-repeat="comment in questTimeline.comments">
               <article class="quest-timeline-comment default-padding">

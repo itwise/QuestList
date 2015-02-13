@@ -3,17 +3,31 @@
 angular.module('questApp')
   .controller('MainCtrl', function ($scope, Auth, $http, $window) {
 
+    $scope.nowProgressQuests = [];
+
     $http.get('/api/quests').success(function(data){
       console.log(data);
       $scope.questTimelines = data;
+
+      $scope.nowProgressQuests = getProgressQuests();
     });
 
 
     $scope.currentUser = Auth.getCurrentUser();
 
-    $scope.nowProgressQuests = [
+    var getProgressQuests = function(){
+      var nowProgressQuestList = [];
 
-    ];
+      $scope.questTimelines.forEach(function(quest){
+        if(quest.status === 'START'){
+          nowProgressQuestList.push(quest);
+        }
+      });
+
+      console.log(nowProgressQuestList);
+
+      return nowProgressQuestList;
+    };
 
     $scope.processibleQuests = [
 
