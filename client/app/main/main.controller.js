@@ -1,17 +1,17 @@
 'use strict';
 
 angular.module('questApp')
-  .controller('MainCtrl', function ($scope, Auth, $http, $window) {
+  .controller('MainCtrl', function ($scope, Auth, $window, Quest) {
 
     $scope.nowProgressQuests = [];
 
-    $http.get('/api/quests').success(function(data){
-      console.log(data);
-      $scope.questTimelines = data;
+    Quest.getQuestList(function(questList){
+      $scope.questTimelines = questList;
 
       $scope.nowProgressQuests = getProgressQuests();
     });
 
+    console.log(Quest.getQuestList());
 
     $scope.currentUser = Auth.getCurrentUser();
 
@@ -34,7 +34,11 @@ angular.module('questApp')
     ];
 
     $scope.addQuest = function(quest){
-
+      if(quest === undefined || quest.title === undefined
+        || quest.content === undefined || quest.title === "" || quest.content === "" ){
+        alert("내용을 입력해 주세요");
+        return;
+      }
       var splitTagList;
       if(quest.tags !== undefined){
         splitTagList = quest.tags.split('#');
@@ -49,12 +53,10 @@ angular.module('questApp')
         quest.tags = splitTagList;
       }
 
-      console.log(quest);
-     $http.post('/api/quests', quest).success(function(data, status, headers, config){
+      Quest.createQuest(quest, function(data){
         $window.location.reload();
-      }).error(function(data, status, headers, config){
-
       });
+
     };
 
     $scope.getConnectingWord = function(word){

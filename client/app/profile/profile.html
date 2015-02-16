@@ -78,13 +78,13 @@
         </ul>
       </div>
       <div class="quest-panel col-sm-12">
-        <h4>진행 중인 퀘스트 {{nowProgressQuests.length}}</h4>
+        <h4>진행 중인 퀘스트</h4>
         <div class="well" data-ng-show="nowProgressQuests.length === 0">
-          현재 진행 중인 퀘스트가 없습니다.
+          <strong class="text-success"> 현재 진행 중인 퀘스트가 없습니다. </strong>
         </div>
         <ul class="list-unstyled">
           <li data-ng-repeat="nowProgressQuest in nowProgressQuests">
-            <strong>{{nowProgressQuest.questPool.title}}</strong>
+            <strong class="text-info">{{nowProgressQuest.questPool.title}}</strong>
           </li>
         </ul>
       </div>
