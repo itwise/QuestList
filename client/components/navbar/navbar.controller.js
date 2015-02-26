@@ -6,8 +6,8 @@ angular.module('questApp')
       'title': 'My ',
       'link': '/profile/me'
     },{
-      'title': 'Quest Time Line',
-      'link': '/quest/me'
+      'title': 'Friend',
+      'link': '/friend'
     }];
     $scope.currentUser = Auth.getCurrentUser();
 
