@@ -21,11 +21,42 @@
   <div class="col-sm-10 col-sm-offset-2">
     <div class="col-sm-6 col-sm-offset-3">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search" name="q">
+          <input type="text" class="form-control" placeholder="Search" data-ng-model="search">
           <div class="input-group-btn">
-            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            <button class="btn btn-default" data-ng-click="searchUser()"><i class="glyphicon glyphicon-search"></i></button>
           </div>
         </div>
+    </div>
+  </div>
+  <div data-ng-show="isSearch" class="col-sm-10 col-sm-offset-2">
+    <div class="col-sm-9">
+      <section class="panel panel-default">
+        <div class="panel-heading">검색 결과</div>
+        <div class="panel-body">
+          <strong data-ng-show="findUserList.length === 0" class="text-success"> 검색결과 해당 유저 없음 </strong>
+          <table data-ng-show="findUserList.length !== 0" class="table">
+            <thead>
+            <tr>
+              <th class="col-xs-1"></th>
+              <th class="col-xs-3"></th>
+              <th class="col-xs-2">name</th>
+              <th class="col-xs-2">추가여부</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="linkable" data-ng-repeat="findUser in findUserList">
+              <td class="text-center" style="vertical-align : middle">{{$index + 1}}</td>
+              <td> <div class="quest-user-profile-photo pull-left" data-ng-style="{'background-image':'url(' + findUser.profileImage + ')'}"></div></td>
+              <td style="vertical-align : middle">{{findUser.name}}</td>
+              <td style="vertical-align : middle">
+                <button data-ng-show="findUser._id !== currentUser._id && !findUser.isFriend" class="btn btn-primary" data-ng-click="addFriend(findUser)">친구추가</button>
+                <span data-ng-show="findUser.isFriend" class="label label-info">친구</span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
     </div>
   </div>
   <div class="col-sm-10 col-sm-offset-2">
@@ -48,7 +79,7 @@
               <td> <div class="quest-user-profile-photo pull-left" data-ng-style="{'background-image':'url(' + friends.profileImage + ')'}"></div></td>
               <td style="vertical-align : middle">{{friends.name}}</td>
               <td style="vertical-align : middle">
-                <button class="btn btn-primary">친구삭제</button>
+                <button class="btn btn-primary" data-ng-click="deleteFriend(friends)">친구삭제</button>
               </td>
             </tr>
             </tbody>

@@ -20,6 +20,30 @@ exports.index = function(req, res) {
   });
 };
 
+exports.findUser = function(req, res){
+  var search = req.params.email;
+  User.find(
+    {
+      "$or" : [ { name : {$regex : search} }, { email : {$regex : search} } ]
+  }, {"hashedPassword" : 0, "salt" : 0},function(err, user) { // don't ever give out the password or salt
+    if (err) return next(err);
+    if (!user) return res.json(401);
+    var options = {
+      path : 'friends',
+      model : 'User'
+    };
+    User.populate(user, options, function(err, userList){
+      console.log(userList);
+      res.json(userList);
+    });
+
+  });
+ /* User.find({ name : req.body}, '-salt -hashedPassword', function (err, users) {
+    if(err) return res.send(500, err);
+    res.json(200, users);
+  });*/
+};
+
 /**
  * Creates a new user
  */
@@ -96,6 +120,24 @@ exports.me = function(req, res, next) {
     User.populate(user, options, function(err, userList){
       console.log(userList);
       res.json(userList);
+    });
+
+  });
+};
+
+exports.update = function(req, res, next){
+  console.log(req.params.id);
+  console.log(req.body);
+  User.findById(req.params.id, function (err, user) {
+    if (err) { return handleError(res, err); }
+    if(!user) { return res.send(404); }
+
+    user.friends = req.body;
+    console.log(user);
+    user.save(function(err){
+      if (err) { return handleError(res, err); }
+      console.log(user);
+      return res.json(200, user);
     });
 
   });

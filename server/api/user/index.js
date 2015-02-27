@@ -14,4 +14,8 @@ router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 router.post('/', controller.create);
 
+//friend
+router.get('/find/:email', auth.isAuthenticated(), controller.findUser);
+router.put('/:id', auth.isAuthenticated(), controller.update); //add, delete
+
 module.exports = router;
