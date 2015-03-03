@@ -8,20 +8,17 @@ angular.module('questApp')
       },
       replace: true,
       restrict: 'E',
-      controller: function($scope, $window, Auth, Quest, Comment){
+      controller: function($scope, $window, Auth, Quest, Comment, Notifier){
         $scope.currentUser = Auth.getCurrentUser();
 
         $scope.deleteComment = function(comment){
-          var options = $window.confirm('delete?');
 
-          if (options === true) {
+          Notifier.confirm('delete?', function(){
             Comment.deleteComment({ _id : comment._id}, comment, function(data){
               console.log(data);
               $window.location.reload();
             });
-          } else {
-            console.log('cancel')
-          }
+          });
         };
 
         $scope.getPrintEditData = function(questTimeline){
@@ -47,10 +44,9 @@ angular.module('questApp')
          });
         };
 
-
         $scope.addComment = function(questTimeline){
           if(questTimeline.addTargetComment === undefined){
-            alert('내용이 없습니다.');
+            Notifier.message('내용이 없습니다.');
             return;
           }
 
@@ -61,47 +57,66 @@ angular.module('questApp')
 
         };
 
+        /**
+         * Delete Timeline
+         * @param questTimeLine
+         */
         $scope.deleteQeustTimeline = function(questTimeLine){
-          var options = $window.confirm('delete?');
-
-          if(options === true){
-            Quest.deleteQuest({ _id : questTimeLine._id}, questTimeLine, function(err){
-              $window.location.reload();
-            })
-          }
-
+            Notifier.confirm('해당 Quest를 삭제 하시겠습니까?', function(){
+              Quest.deleteQuest({ _id : questTimeLine._id}, questTimeLine, function(err){
+                $window.location.reload();
+              });
+            });
         };
 
+        /**
+         * Timeline 수정
+         * @param questTimeline
+         */
+
         $scope.modifyTimeline = function(questTimeline){
-          var splitTagList;
 
-          if(questTimeline.editTags !== undefined && questTimeline.editTags !== "" ){
-            splitTagList = questTimeline.editTags.split('#');
+          Notifier.confirm('해당 내용으로 저장 하시겠습니까?', function(){
+            var splitTagList;
 
-            console.log(splitTagList);
-            if(splitTagList.length <= 1) {
-              alert("Not found '#'");
-              return;
+            if(questTimeline.editTags !== undefined && questTimeline.editTags !== "" ){
+              splitTagList = questTimeline.editTags.split('#');
+
+              console.log(splitTagList);
+              if(splitTagList.length <= 1) {
+                alert("Not found '#'");
+                return;
+              }
+              splitTagList.shift();
+
+              questTimeline.questPool.tags = splitTagList;
+            }else{
+              questTimeline.questPool.tags = [];
             }
-            splitTagList.shift();
 
-            questTimeline.questPool.tags = splitTagList;
-          }else{
-            questTimeline.questPool.tags = [];
-          }
+            Quest.updateQuest({ _id : questTimeline._id}, questTimeline, function(quest){
+              Notifier.message('수정완료 하였습니다.', function(){
+                $window.location.reload();
+              });
+            });
 
-          Quest.updateQuest({ _id : questTimeline._id}, questTimeline, function(quest){
-            $window.location.reload();
           });
         };
 
+        /**
+         * 퀘스트 상태변경
+         * @param questTimeline
+         */
         $scope.changeStatus = function(questTimeline){
           questTimeline.status = 'END';
           questTimeline.completeDate = new Date();
 
-          Quest.updateQuest({ _id : questTimeline._id}, questTimeline, function(quest){
-            $window.location.reload();
+          Notifier.confirm('해당 Quest를 완료 하시겠습니까?', function(){
+            Quest.updateQuest({ _id : questTimeline._id}, questTimeline, function(quest){
+              Notifier.message(quest.questPool.title + '완료하였습니다.');
+            });
           });
+
         };
 
       },
