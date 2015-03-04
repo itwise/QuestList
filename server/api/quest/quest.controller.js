@@ -11,7 +11,7 @@ exports.index = function(req, res) {
   Quest.find({ user : req.user._id})
     .limit(10).sort('-startDate')
     .populate('questPool')
-    .populate('user')git
+    .populate('user')
     .populate({ path : 'comments'})
     .exec(function(err, quests){
       if(err) { return handleError(res, err); }
