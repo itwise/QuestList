@@ -64,7 +64,9 @@ angular.module('questApp')
         $scope.deleteQeustTimeline = function(questTimeLine){
             Notifier.confirm('해당 Quest를 삭제 하시겠습니까?', function(){
               Quest.deleteQuest({ _id : questTimeLine._id}, questTimeLine, function(err){
-                $window.location.reload();
+                Notifier.message('삭제되었습니다.', function(){
+                  $window.location.reload();
+                });
               });
             });
         };

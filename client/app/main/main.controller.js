@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('questApp')
-  .controller('MainCtrl', function ($scope, Auth, $window, Quest) {
+  .controller('MainCtrl', function ($scope, Auth, $window, Quest, Notifier) {
 
     $scope.nowProgressQuests = [];
 
@@ -36,7 +36,7 @@ angular.module('questApp')
     $scope.addQuest = function(quest){
       if(quest === undefined || quest.title === undefined
         || quest.content === undefined || quest.title === "" || quest.content === "" ){
-        alert("내용을 입력해 주세요");
+        Notifier.message("내용을 입력해 주세요");
         return;
       }
       var splitTagList;
@@ -44,7 +44,7 @@ angular.module('questApp')
         splitTagList = quest.tags.split('#');
 
         if(splitTagList.length <= 1) {
-          alert("Not found '#'");
+          Notifier.message("Not found '#'");
           return;
         }
 
@@ -54,7 +54,9 @@ angular.module('questApp')
       }
 
       Quest.createQuest(quest, function(data){
-        $window.location.reload();
+        Notifier.message('quest가 등록 되었습니다.', function(){
+          $window.location.reload();
+        });
       });
 
     };
