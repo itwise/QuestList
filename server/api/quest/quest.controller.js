@@ -27,11 +27,21 @@ exports.index = function(req, res) {
 
 // Get a single quest
 exports.show = function(req, res) {
-  Quest.findById(req.params.id, function (err, quest) {
-    if(err) { return handleError(res, err); }
-    if(!quest) { return res.send(404); }
-    return res.json(quest);
-  });
+  Quest.find({ user : req.params.id })
+    .limit(10).sort('-startDate')
+    .populate('questPool')
+    .populate('user')
+    .populate({ path : 'comments'})
+    .exec(function(err, quests){
+      if(err) { return handleError(res, err); }
+      var options = {
+        path : 'comments.user',
+        model : 'User'
+      };
+      Comment.populate(quests, options, function(err, questList){
+        return res.json(200, questList);
+      });
+    });
 };
 
 // Creates a new quest in the DB.
