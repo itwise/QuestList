@@ -22,6 +22,10 @@ angular.module('questApp')
         deleteQuest : {
           url : 'api/quests/:id',
           method : 'DELETE'
+        },
+        likeQuest : {
+          url : 'api/quests/like',
+          method : 'POST'
         }
       }
     );

@@ -31,6 +31,11 @@ var QuestSchema = new Schema({
     ref : 'Comment',
     type : Schema.Types.ObjectId,
     required : false
+  }],
+  likes : [{
+    ref : 'User',
+    type : Schema.Types.ObjectId,
+    required : false
   }]
 
 });

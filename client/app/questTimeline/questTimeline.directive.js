@@ -8,7 +8,7 @@ angular.module('questApp')
       },
       replace: true,
       restrict: 'E',
-      controller: function($scope, $window, Auth, Quest, Comment, Notifier){
+      controller: function($scope, $window, Auth, Quest, Comment, Notifier, $http){
         $scope.currentUser = Auth.getCurrentUser();
 
         $scope.deleteComment = function(comment){
@@ -104,6 +104,15 @@ angular.module('questApp')
 
           });
         };
+
+        /**
+         * 좋아요 클릭 이벤트
+         */
+        $scope.favorEvent = function(questTimeline){
+          Quest.likeQuest({questId : questTimeline._id}, function(data){
+            console.log('asdfsadfasdf');
+          });
+        }
 
         /**
          * 퀘스트 상태변경

@@ -11,7 +11,7 @@ exports.index = function(req, res) {
   Quest.find({ user : req.user._id})
     .limit(10).sort('-startDate')
     .populate('questPool')
-    .populate('user')
+    .populate('user')git
     .populate({ path : 'comments'})
     .exec(function(err, quests){
       if(err) { return handleError(res, err); }
@@ -105,7 +105,24 @@ exports.destroy = function(req, res) {
 
   });
 };
+exports.like = function(req, res){
+  console.log('like');
+  console.log(req.body);
+  Quest.findById(req.body.questId, function(err, quest){
+    console.log('quest start');
 
+    if(quest){
+      console.log(quest);
+      if(_.indexOf(quest.likes) === -1){
+        quest.likes.push(req.user._id);
+        quest.save(function(err){
+          console.log(err);
+        });
+      }
+    }
+  });
+  return res.json(200, {test: 'aaa'});
+}
 function handleError(res, err) {
   return res.send(500, err);
 }
