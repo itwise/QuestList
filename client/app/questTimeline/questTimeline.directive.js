@@ -108,9 +108,15 @@ angular.module('questApp')
         /**
          * 좋아요 클릭 이벤트
          */
-        $scope.favorEvent = function(questTimeline){
+        $scope.likeEvent = function(questTimeline){
           Quest.likeQuest({questId : questTimeline._id}, function(data){
-            console.log('asdfsadfasdf');
+            if(data.retCode === "fail"){
+              Notifier.message(data.msg, function(){
+
+              });
+            }else{
+              console.log('asdfsadf');
+            }
           });
         }
 

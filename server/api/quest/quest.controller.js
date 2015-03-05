@@ -12,6 +12,7 @@ exports.index = function(req, res) {
     .limit(10).sort('-startDate')
     .populate('questPool')
     .populate('user')
+    .populate('likes')
     .populate({ path : 'comments'})
     .exec(function(err, quests){
       if(err) { return handleError(res, err); }
@@ -106,22 +107,46 @@ exports.destroy = function(req, res) {
   });
 };
 exports.like = function(req, res){
-  console.log('like');
-  console.log(req.body);
-  Quest.findById(req.body.questId, function(err, quest){
-    console.log('quest start');
-
+  var msg = "";
+  var retCode = "success";
+  var questId = req.body.questId;
+  var userId = req.user._id;
+  Quest.findOne({_id : questId, likes : {$ne : userId}}, function(err, quest){
     if(quest){
-      console.log(quest);
-      if(_.indexOf(quest.likes) === -1){
-        quest.likes.push(req.user._id);
-        quest.save(function(err){
-          console.log(err);
-        });
-      }
+      quest.likes.push(userId);
+      quest.save(function(err){
+        return res.json(500, {msg : 'Internal Server Exception'})
+      });
+      retCode = "success";
+      msg = "처리 되었습니다.";
+    }else{
+      retCode = "fail";
+      msg = "이미 처리 되었습니다.";
     }
+    return res.json(200, {retCode : retCode, msg : msg, userId : userId});
   });
-  return res.json(200, {test: 'aaa'});
+  //Quest.findById(req.body.questId, function(err, quest){
+  //  if(quest){
+  //    console.log(_.indexOf(quest.likes, req.user._id.toString()));
+  //    if(_.indexOf(quest.likes, req.user._id.toString()) === -1){
+  //      quest.likes.push(req.user._id);
+  //      quest.save(function(err){
+  //        retCode = "fail";
+  //        msg = "이미 처리 되었습니다.";
+  //        console.log('err')
+  //        console.log(err);
+  //      });
+  //      msg = "데이터가 저장 되었습니다.";
+  //    }else{
+  //      retCode = "fail";
+  //      msg = "이미 처리 되었습니다.";
+  //    }
+  //  }else{
+  //    retCode = "fail";
+  //    msg = "잘못 된 Quest 정보입니다.";
+  //  }
+  //});
+  //return res.json(200, {retCode: retCode, msg : msg});
 }
 function handleError(res, err) {
   return res.send(500, err);
