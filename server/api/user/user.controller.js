@@ -64,10 +64,18 @@ exports.create = function (req, res, next) {
 exports.show = function (req, res, next) {
   var userId = req.params.id;
 
-  User.findById(userId, function (err, user) {
+  User.findById(userId, '-salt -hashedPassword', function (err, user) {
     if (err) return next(err);
     if (!user) return res.send(401);
-    res.json(user.profile);
+
+    var options = {
+      path : 'friends',
+      model : 'User'
+    };
+    User.populate(user, options, function(err, userList){
+      console.log(userList);
+      res.json(userList);
+    });
   });
 };
 

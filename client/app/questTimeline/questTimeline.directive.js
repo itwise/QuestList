@@ -15,7 +15,6 @@ angular.module('questApp')
 
           Notifier.confirm('delete?', function(){
             Comment.deleteComment({ _id : comment._id}, comment, function(data){
-              console.log(data);
               $window.location.reload();
             });
           });
@@ -50,10 +49,12 @@ angular.module('questApp')
             return;
           }
 
+          questTimeline.user = $scope.currentUser;
+
           Comment.createComment(questTimeline, function(comment){
             questTimeline.comments.push(comment);
             questTimeline.addTargetComment = {}
-          })
+          });
 
         };
 

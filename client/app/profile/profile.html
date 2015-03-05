@@ -1,15 +1,15 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<section class="main-container container">
+<section class="main-container container" data-ng-init="init()">
   <div class="quest-wrapper col-sm-12">
     <div class="col-sm-3">
       <aside class="col-sm-12">
         <div class="panel panel-default">
           <div class="panel-heading">Profile</div>
           <div class="panel-body">
-            <div class="quest-user-profile-photo pull-left" data-ng-style="{'background-image':'url(' + currentUser.profileImage + ')'}"></div>
+            <div class="quest-user-profile-photo pull-left" data-ng-style="{'background-image':'url(' + user.profileImage + ')'}"></div>
             <div class="pull-right">
-              <a href="/profile/me">{{currentUser.name}}</a>
+              <a href="profile({userId: user._id})" >{{user.name}}</a>
             </div>
           </div>
         </div>
@@ -28,10 +28,8 @@
         <div class="panel panel-default">
           <header class="panel-heading">친구목록</header>
           <div class="panel-body">
-            <ul class="list-unstyled">
-              <li><a href="#">user_01</a></li>
-              <li><a href="#">user_02</a></li>
-              <li><a href="#">user_03</a></li>
+            <ul class="list-unstyled" data-ng-repeat="friend in user.friends">
+              <li><a href="#">{{friend.name}}</a></li>
             </ul>
           </div>
         </div>

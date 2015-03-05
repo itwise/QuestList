@@ -15,6 +15,7 @@ angular.module('questApp')
             var b = new Date(rec.startDate);
             return a - b;
           });
+          console.log($scope.questTimelines);
         });
       }
       $scope.nowProgressQuests = getProgressQuests();
