@@ -11,6 +11,11 @@ angular.module('questApp')
           method : 'GET',
           isArray : true
         },
+        getQuests : {
+          url : '/api/quests/:id',
+          method : 'GET',
+          isArray : true
+        },
         createQuest : {
           url : '/api/quests',
           method : 'POST'
