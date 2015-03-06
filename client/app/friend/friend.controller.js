@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('questApp')
-  .controller('FriendCtrl', function ($scope, Auth, $http) {
+  .controller('FriendCtrl', function ($scope, Auth, $http, Notifier, $window) {
     $scope.message = 'Hello';
 
     $scope.currentUser = Auth.getCurrentUser();
@@ -13,35 +13,46 @@ angular.module('questApp')
 
 
     $scope.deleteFriend = function(friend){
-      var users = $scope.currentUser.friends;
-      var data = [];
+      Notifier.confirm('[' + friend.name + '] 삭제 하시겠습니까? ', function(){
+        var users = $scope.currentUser.friends;
+        var data = [];
 
-      users.forEach(function(friends){
+        users.forEach(function(friends){
           if(friends._id === friend._id){
             console.log(friend._id);
           }else{
             data.push(friends);
           }
+        });
+
+        $http.put('/api/users/' + $scope.currentUser._id, data ).success(function(user){
+          Notifier.message('삭제되었습니다.', function(){
+            $window.location.reload();
+          });
+
+        });
       });
 
-      $http.put('/api/users/' + $scope.currentUser._id, data ).success(function(user){
-        console.log(user);
-      });
     };
 
     $scope.addFriend = function(findUser){
-      var friendList = $scope.currentUser.friends;
+      Notifier.confirm('친구추가 하시겠습니까?', function(){
+        var friendList = $scope.currentUser.friends;
 
-      friendList.push(findUser);
+        friendList.push(findUser);
 
-      $http.put('/api/users/' + $scope.currentUser._id, friendList ).success(function(user){
-        console.log(user);
+        $http.put('/api/users/' + $scope.currentUser._id, friendList ).success(function(user){
+          Notifier.message('친구추가 완료.', function(){
+            $window.location.reload();
+          });
+        });
       });
+
     };
 
     $scope.searchUser = function(){
       if($scope.search === "" || $scope.search === null){
-        alert("검색어를 입력해주세요.");
+        Notifier.message("검색어를 입력해주세요.");
         return;
       }
 

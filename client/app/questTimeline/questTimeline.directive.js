@@ -49,11 +49,13 @@ angular.module('questApp')
             return;
           }
 
-          questTimeline.user = $scope.currentUser;
+          questTimeline.commentUser = $scope.currentUser;
 
           Comment.createComment(questTimeline, function(comment){
             questTimeline.comments.push(comment);
             questTimeline.addTargetComment = {}
+            console.log("add comment");
+            console.log(questTimeline);
           });
 
         };
