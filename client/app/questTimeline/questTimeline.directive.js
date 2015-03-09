@@ -118,7 +118,7 @@ angular.module('questApp')
 
               });
             }else{
-              console.log('asdfsadf');
+              console.log('success');
             }
           });
         }

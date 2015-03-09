@@ -31,6 +31,11 @@ angular.module('questApp')
         likeQuest : {
           url : 'api/quests/like',
           method : 'POST'
+        },
+        tagQuest : {
+          url : 'api/quests/tag/:tag',
+          method : 'GET',
+          isArray : true
         }
       }
     );
