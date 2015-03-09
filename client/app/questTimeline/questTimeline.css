@@ -42,8 +42,14 @@
 }
 
 .custom-icon {
-  padding-right: 8px;
-  padding-left: 8px;
+  padding-right: 1px;
+  padding-left: 5px;
   padding-top: 3px;
   padding-bottom: 3px;
+  cursor: pointer;
+  color : darkgray;
+}
+
+.custom-icon:hover {
+  color : blue;
 }

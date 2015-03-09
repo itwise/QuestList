@@ -23,7 +23,8 @@ exports.show = function(req, res) {
 
 // Creates a new comment in the DB.
 exports.create = function(req, res) {
-  Comment.create({content : req.body.addTargetComment.content, user : req.body.user._id, quest : req.body._id }, function(err, comment) {
+
+  Comment.create({content : req.body.addTargetComment.content, user : req.body.commentUser._id, quest : req.body._id }, function(err, comment) {
     if(err) { return handleError(res, err); }
    // return res.json(201, comment);
     Quest.findOne({_id : req.body._id}, function(err, quest){
