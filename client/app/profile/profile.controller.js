@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('questApp')
-  .controller('ProfileCtrl', function ($scope, Auth, Quest, $stateParams, $http) {
+  .controller('ProfileCtrl', function ($scope, Auth, Quest, $stateParams, $http, Notifier, $window) {
     $scope.message = 'Hello';
 
 
@@ -48,4 +48,28 @@ angular.module('questApp')
 
       return nowProgressQuestList;
     };
+
+    $scope.addQuest = function(quest){
+      if(quest === undefined || quest.title === undefined
+        || quest.content === undefined || quest.title === "" || quest.content === "" ){
+        Notifier.message("내용을 입력해 주세요");
+        return;
+      }
+      var splitTagList;
+      if(quest.tags !== undefined){
+        splitTagList = quest.tags.split('#');
+        if(splitTagList.length <= 1) {
+          Notifier.message("Not found '#'");
+          return;
+        }
+        splitTagList.shift();
+        quest.tags = splitTagList;
+      }
+      Quest.createQuest(quest, function(data){
+        Notifier.message('quest가 등록 되었습니다.', function(){
+          $window.location.reload();
+        });
+      });
+    };
+
   });

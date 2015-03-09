@@ -133,7 +133,7 @@ exports.like = function(req, res){
       retCode = "fail";
       msg = "이미 처리 되었습니다.";
     }
-    return res.json(200, {retCode : retCode, msg : msg, userId : userId});
+    return res.json(200, {retCode : retCode, msg : msg, userId : userId, likes : quest.likes });
   });
 }
 

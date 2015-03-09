@@ -118,7 +118,7 @@ angular.module('questApp')
 
               });
             }else{
-              console.log('success');
+              questTimeline.likes = data.likes;
             }
           });
         }
