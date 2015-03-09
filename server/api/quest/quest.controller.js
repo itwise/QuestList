@@ -128,35 +128,37 @@ exports.like = function(req, res){
         return res.json(500, {msg : 'Internal Server Exception'})
       });
       retCode = "success";
-      msg = "처리 되었습니다.";
+      msg = "처리 되었습니다. ";
     }else{
       retCode = "fail";
       msg = "이미 처리 되었습니다.";
     }
     return res.json(200, {retCode : retCode, msg : msg, userId : userId});
   });
-  //Quest.findById(req.body.questId, function(err, quest){
-  //  if(quest){
-  //    console.log(_.indexOf(quest.likes, req.user._id.toString()));
-  //    if(_.indexOf(quest.likes, req.user._id.toString()) === -1){
-  //      quest.likes.push(req.user._id);
-  //      quest.save(function(err){
-  //        retCode = "fail";
-  //        msg = "이미 처리 되었습니다.";
-  //        console.log('err')
-  //        console.log(err);
-  //      });
-  //      msg = "데이터가 저장 되었습니다.";
-  //    }else{
-  //      retCode = "fail";
-  //      msg = "이미 처리 되었습니다.";
-  //    }
-  //  }else{
-  //    retCode = "fail";
-  //    msg = "잘못 된 Quest 정보입니다.";
-  //  }
-  //});
-  //return res.json(200, {retCode: retCode, msg : msg});
+}
+
+exports.getQuestByTag = function(req, res){
+  var tag = req.params.tag;
+
+  QuestPool.find({tags : tag}, function(err, questPool){
+    var questPoolList = _.pluck(questPool, '_id');
+
+    Quest.find({questPool : {$in : questPoolList}})
+      .populate('questPool user likes')
+      .populate({path : 'comments'})
+      .exec(function(err, quests){
+        if(err) { return handleError(res, err); }
+        var options = {
+          path : 'comments.user',
+          model : 'User'
+        };
+        Comment.populate(quests, options, function(err, questList){
+          return res.json(200, questList);
+        });
+      });
+
+  });
+
 }
 function handleError(res, err) {
   return res.send(500, err);
