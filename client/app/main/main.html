@@ -18,8 +18,8 @@
         <div class="panel panel-default">
           <header class="panel-heading">퀘스트 수행 랭킹</header>
           <div class="panel-body">
-            <ul class="list-unstyled">
-              TODO...
+            <ul class="list-unstyled" data-ng-repeat="questPool in questPoolRank">
+              <li><strong>{{$index + 1}}.</strong><a href="#" data-ng-click="startQuest(questPool)"> {{questPool.title}} </a></li>
             </ul>
           </div>
         </div>

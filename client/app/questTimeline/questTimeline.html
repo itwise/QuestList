@@ -63,7 +63,7 @@
         </div>
         <div class="col-sm-12 quest-timeline-interaction-wrapper">
           <div class="pull-left"><button class="btn btn-fab btn-raised btn-material-indigo" data-ng-click="likeEvent(questTimeline)"><i class="mdi-action-thumb-up"></i></button></div>
-          <div data-ng-show="questTimeline.status !== 'END' && questTimeline.user._id === currentUser._id " class="pull-right"><button class="btn btn-fab btn-raised btn-material-orange" data-ng-click="changeStatus(questTimeline)"><i class="mdi-content-flag"></i></button></div>
+          <div data-ng-show="questTimeline.status !== 'END' && questTimeline.user._id === currentUser._id " class="pull-right"><button class="btn btn-fab btn-raised btn-material-orange" data-ng-click="completeQuest(questTimeline)"><i class="mdi-content-flag"></i></button></div>
         </div>
         <div class="col-sm-12 quest-timeline-comment-wrapper no-padding">
           <hr/>

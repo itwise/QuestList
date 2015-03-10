@@ -3,6 +3,7 @@
 angular.module('questApp')
   .controller('ProfileCtrl', function ($scope, Auth, Quest, $stateParams, $http, Notifier, $window) {
     $scope.message = 'Hello';
+    $scope.currentUser = Auth.getCurrentUser();
 
 
     $scope.init = function(){

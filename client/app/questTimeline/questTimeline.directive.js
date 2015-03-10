@@ -8,7 +8,7 @@ angular.module('questApp')
       },
       replace: true,
       restrict: 'E',
-      controller: function($scope, $window, Auth, Quest, Comment, Notifier, $http){
+      controller: function($scope, $window, Auth, Quest, Comment, Notifier){
         $scope.currentUser = Auth.getCurrentUser();
 
         $scope.deleteComment = function(comment){
@@ -127,11 +127,15 @@ angular.module('questApp')
          * 퀘스트 상태변경
          * @param questTimeline
          */
-        $scope.changeStatus = function(questTimeline){
-          questTimeline.status = 'END';
-          questTimeline.completeDate = new Date();
+        $scope.completeQuest = function(questTimeline){
 
           Notifier.confirm('해당 Quest를 완료 하시겠습니까?', function(){
+
+            questTimeline.questPool.completeCount += 1;
+            questTimeline.status = 'END';
+            questTimeline.completeDate = new Date();
+            console.log(questTimeline);
+
             Quest.updateQuest({ _id : questTimeline._id}, questTimeline, function(quest){
               Notifier.message(quest.questPool.title + '완료하였습니다.');
             });

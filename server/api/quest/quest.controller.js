@@ -49,18 +49,40 @@ exports.show = function(req, res) {
 exports.create = function(req, res) {
   var insertData = req.body;
   insertData.user = req.user._id;
-  QuestPool.findOne({title : req.body.title},function(err, result){
-    if(result){
-      insertData.questPool = result._id;
-      questCreate(insertData, res);
-    }else{
-      console.log(req.body.tags);
-      QuestPool.create({title : req.body.title, tags: req.body.tags}, function(err, questPool){
-        insertData.questPool = questPool._id;
+
+  if(insertData.questPool){
+    QuestPool.findOne({
+      "$or" : [ { title : insertData.title }, { _id : insertData.questPool._id } ]
+    },function(err, result){
+      console.log(result);
+      if(result){ //QuestPool이 존재하는경우
+        insertData.questPool = result._id;
         questCreate(insertData, res);
-      });
-    }
-  });
+       }else{
+        console.log(req.body.tags);
+        QuestPool.create({title : req.body.title, tags: req.body.tags}, function(err, questPool){
+          insertData.questPool = questPool._id;
+          questCreate(insertData, res);
+        });
+       }
+    });
+  }else{
+    console.log("id false");
+    QuestPool.findOne({
+      title : insertData.title
+    },function(err, result){
+      if(result){ //QuestPool이 존재하는경우
+        insertData.questPool = result._id;
+        questCreate(insertData, res);
+       }else{
+        QuestPool.create({title : req.body.title, tags: req.body.tags}, function(err, questPool){
+          insertData.questPool = questPool._id;
+          questCreate(insertData, res);
+        });
+       }
+    });
+  }
+
 };
 
 var questCreate = function(quest, res){
@@ -78,12 +100,14 @@ exports.update = function(req, res) {
     if (err) { return handleError(res, err); }
     if(!quest) { return res.send(404); }
     var updated = _.merge(quest, { content : req.body.content, status : req.body.status, completeDate : req.body.completeDate });
+    console.log(updated);
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
       QuestPool.update({_id: req.body.questPool._id}, {
         $set:{
           title : req.body.questPool.title,
-          tags : req.body.questPool.tags
+          tags : req.body.questPool.tags,
+          completeCount : req.body.questPool.completeCount
         }
       }, function(err, questPool){
         if (err) { return handleError(res, err); }

@@ -5,10 +5,12 @@ var Questpool = require('./questPool.model');
 
 // Get list of questPools
 exports.index = function(req, res) {
-  Questpool.find(function (err, questPools) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, questPools);
-  });
+  Questpool.find({}).limit(10)
+    .sort('-completeCount')
+    .exec(function (err, questPools) {
+      if(err) { return handleError(res, err); }
+      return res.json(200, questPools);
+    });
 };
 
 // Get a single questPool
