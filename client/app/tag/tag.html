@@ -1,4 +1,8 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 <section data-ng-controller="TagCtrl" data-ng-init="init()">
-  <quest-timeline data-quest-timelines="questTimelines"></quest-timeline>
+  <div class="col-sm-10 col-sm-offset-2">
+    <div class="col-sm-9">
+      <quest-timeline data-quest-timelines="questTimelines"></quest-timeline>
+    </div>
+  </div>
 </section>
