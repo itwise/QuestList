@@ -29,7 +29,7 @@
           <header class="panel-heading">친구목록</header>
           <div class="panel-body">
             <ul class="list-unstyled" data-ng-repeat="friend in user.friends">
-              <li><a href="#">{{friend.name}}</a></li>
+              <li><a href="#" data-ui-sref="profile({userId: friend._id})">{{friend.name}}</a></li>
             </ul>
           </div>
         </div>
@@ -38,7 +38,7 @@
 
     <div class="col-sm-6">
       <div class="panel panel-default">
-        <div class="panel-body">
+        <div data-ng-show="currentUser._id === user._id" class="panel-body">
           <div class="row" data-ng-model="quest">
             <div class="col-sm-12 form-group">
               <input type="text" class="form-control" data-ng-model="quest.title" placeholder="퀘스트 이름이 어떻게 되나요?"/>
