@@ -6,13 +6,13 @@ var mongoose = require('mongoose'),
 var QuestPoolSchema = new Schema({
   title: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   progressCount: {
     type: Number,
     default: 0
   },
+
   completeCount: {
     type: Number,
     default: 0
@@ -25,7 +25,14 @@ var QuestPoolSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  tags: [String]
+  tags: [String],
+  createUser: {
+    ref: 'User',
+    type: Schema.Types.ObjectId,
+    required: true
+  }
 });
+
+//QuestPoolSchema.index({title : 1, createUser : 1}, {unique : true});
 
 module.exports = mongoose.model('QuestPool', QuestPoolSchema);

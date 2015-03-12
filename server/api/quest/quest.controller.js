@@ -50,37 +50,79 @@ exports.create = function(req, res) {
   var insertData = req.body;
   insertData.user = req.user._id;
 
-  if(insertData.questPool){
+  if(insertData.questPool){ //기존에 questPool 자동생성성
+    console.log("================================");
+    console.log(insertData);
     QuestPool.findOne({
-      "$or" : [ { title : insertData.title }, { _id : insertData.questPool._id } ]
+      $and : [
+          { title : insertData.questPool.title },
+          {
+            createUser : insertData.user
+          }
+      ]
     },function(err, result){
-      console.log(result);
-      if(result){ //QuestPool이 존재하는경우
-        insertData.questPool = result._id;
-        questCreate(insertData, res);
-       }else{
-        console.log(req.body.tags);
-        QuestPool.create({title : req.body.title, tags: req.body.tags}, function(err, questPool){
-          insertData.questPool = questPool._id;
-          questCreate(insertData, res);
-        });
-       }
+      if(!result){
+        console.log("result null");
+        console.log(insertData);
+        QuestPool.create(
+          { title : insertData.questPool.title,
+            tags : insertData.questPool.tags,
+            createUser : insertData.user
+          }, function(err, questPool){
+            console.log(err);
+            console.log(questPool);
+            insertData.questPool = questPool._id;
+            questCreate(insertData, res);
+          });
+      }else{
+        console.log(result);
+      }
+      console.log(err);
     });
-  }else{
-    console.log("id false");
+
+    /**
+     *  $and : [ {
+        $or : [
+          { title : insertData.questPool.title },
+          { _id : insertData.questPool._id }
+        ]
+      },
+     {
+       createUser : insertData.user
+     }
+     ]
+     */
+
+  }else{ //Timeline에서 글쓸때
+    console.log(insertData);
+
     QuestPool.findOne({
-      title : insertData.title
+      $and : [
+        { title : insertData.title },
+        {
+          createUser : insertData.user
+        }
+      ]
     },function(err, result){
-      if(result){ //QuestPool이 존재하는경우
-        insertData.questPool = result._id;
-        questCreate(insertData, res);
-       }else{
-        QuestPool.create({title : req.body.title, tags: req.body.tags}, function(err, questPool){
-          insertData.questPool = questPool._id;
-          questCreate(insertData, res);
-        });
-       }
+      if(!result){
+        console.log("result null");
+        console.log(insertData);
+        QuestPool.create(
+          { title : insertData.title,
+            tags : insertData.tags,
+            createUser : insertData.user
+          }, function(err, questPool){
+            //console.log(questPool);
+            console.log(err);
+            insertData.questPool = questPool._id;
+            questCreate(insertData, res);
+          });
+      }else{
+        console.log(result);
+      }
+      console.log(err);
     });
+
   }
 
 };
