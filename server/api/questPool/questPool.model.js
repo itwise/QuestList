@@ -12,7 +12,6 @@ var QuestPoolSchema = new Schema({
     type: Number,
     default: 0
   },
-
   completeCount: {
     type: Number,
     default: 0
@@ -33,6 +32,8 @@ var QuestPoolSchema = new Schema({
   }
 });
 
-//QuestPoolSchema.index({title : 1, createUser : 1}, {unique : true});
+QuestPoolSchema.index({title : 1, createUser : 1}, {unique : true});
+
+//<collection>.dropIndexes({key:1 or -1}) ex) db.things.dropIndexes({age:1});
 
 module.exports = mongoose.model('QuestPool', QuestPoolSchema);

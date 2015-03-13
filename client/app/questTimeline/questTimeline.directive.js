@@ -130,7 +130,7 @@ angular.module('questApp')
         $scope.completeQuest = function(questTimeline){
 
           Notifier.confirm('해당 Quest를 완료 하시겠습니까?', function(){
-
+            console.log( "-----------> count : " + questTimeline.questPool.completeCount );
             questTimeline.questPool.completeCount += 1;
             questTimeline.status = 'END';
             questTimeline.completeDate = new Date();

@@ -56,6 +56,20 @@ exports.destroy = function(req, res) {
   });
 };
 
+/**
+ * get QuestPool rank
+ * 1. 중복된 title 불러오면 안된다
+ * 2. complete count  내림차순으로
+ */
+exports.questRank = function(req, res){
+  Questpool.find({}).limit(10)
+    .sort('-completeCount')
+    .exec(function (err, questPools) {
+      if(err) { return handleError(res, err); }
+      return res.json(200, questPools);
+    });
+};
+
 function handleError(res, err) {
   return res.send(500, err);
 }

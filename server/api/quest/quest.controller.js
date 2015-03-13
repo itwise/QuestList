@@ -55,10 +55,15 @@ exports.create = function(req, res) {
     console.log(insertData);
     QuestPool.findOne({
       $and : [
-          { title : insertData.questPool.title },
-          {
-            createUser : insertData.user
-          }
+        {
+          $or: [
+            { title: insertData.questPool.title },
+            { _id : insertData.questPool._id }
+          ]
+        },
+        {
+          createUser : insertData.user
+        }
       ]
     },function(err, result){
       if(!result){
@@ -75,24 +80,11 @@ exports.create = function(req, res) {
             questCreate(insertData, res);
           });
       }else{
-        console.log(result);
+        insertData.questPool = result._id;
+        questCreate(insertData, res);
       }
       console.log(err);
     });
-
-    /**
-     *  $and : [ {
-        $or : [
-          { title : insertData.questPool.title },
-          { _id : insertData.questPool._id }
-        ]
-      },
-     {
-       createUser : insertData.user
-     }
-     ]
-     */
-
   }else{ //Timeline에서 글쓸때
     console.log(insertData);
 
@@ -112,19 +104,17 @@ exports.create = function(req, res) {
             tags : insertData.tags,
             createUser : insertData.user
           }, function(err, questPool){
-            //console.log(questPool);
             console.log(err);
             insertData.questPool = questPool._id;
             questCreate(insertData, res);
           });
       }else{
-        console.log(result);
+        insertData.questPool = result._id;
+        questCreate(insertData, res);
       }
       console.log(err);
     });
-
   }
-
 };
 
 var questCreate = function(quest, res){
