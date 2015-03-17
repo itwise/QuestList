@@ -50,71 +50,97 @@ exports.create = function(req, res) {
   var insertData = req.body;
   insertData.user = req.user._id;
 
-  if(insertData.questPool){ //기존에 questPool 자동생성성
-    console.log("================================");
-    console.log(insertData);
+  console.log(insertData);
+  /**
+   * case 1 - Timeline
+   * case 2 - rank
+   *
+   * 구분 조건 - questPool, tag 유무 - rank의 tag는 new 가 없
+   */
+
+  if(insertData.questPool){
+    console.log("Rank");
     QuestPool.findOne({
-      $and : [
-        {
-          $or: [
-            { title: insertData.questPool.title },
-            { _id : insertData.questPool._id }
-          ]
-        },
-        {
-          createUser : insertData.user
-        }
+        $and : [
+        { title : insertData.questPool.title },
+        { createUser : insertData.user }
       ]
-    },function(err, result){
-      if(!result){
-        console.log("result null");
-        console.log(insertData);
-        QuestPool.create(
-          { title : insertData.questPool.title,
-            tags : insertData.questPool.tags,
-            createUser : insertData.user
-          }, function(err, questPool){
-            console.log(err);
-            console.log(questPool);
-            insertData.questPool = questPool._id;
-            questCreate(insertData, res);
-          });
-      }else{
+    }, function(err, result){
+      console.log(err);
+      if(result){ //기존 User
+        console.log("user");
         insertData.questPool = result._id;
         questCreate(insertData, res);
+      }else{ //new user ;
+        console.log("New user");
+        QuestPool.create({
+          title : insertData.questPool.title,
+          createUser : insertData.user
+        }, function(err, questPool){
+          insertData.questPool = questPool._id;
+          questCreate(insertData, res);
+        });
       }
-      console.log(err);
     });
-  }else{ //Timeline에서 글쓸때
+  }else{
+    console.log("Timeline");
     console.log(insertData);
 
     QuestPool.findOne({
       $and : [
         { title : insertData.title },
-        {
-          createUser : insertData.user
-        }
+        { createUser : insertData.user }
       ]
-    },function(err, result){
-      if(!result){
-        console.log("result null");
-        console.log(insertData);
-        QuestPool.create(
-          { title : insertData.title,
-            tags : insertData.tags,
-            createUser : insertData.user
-          }, function(err, questPool){
-            console.log(err);
-            insertData.questPool = questPool._id;
-            questCreate(insertData, res);
-          });
-      }else{
-        insertData.questPool = result._id;
-        questCreate(insertData, res);
-      }
+    }, function(err, result){
       console.log(err);
+      if(result) { //기존 User
+        if (insertData.tags) {
+          if (result.tags.length >= 1) { //tag존재 TagUpdate
+            console.log("resultData Tag O");
+            result.tags = result.tags.concat(insertData.tags);
+            QuestPool.update({_id: result._id}, {
+              $set: {
+                tags: result.tags
+              }
+            }, function (err, questPool) {
+              if (err) {
+                return handleError(res, err);
+              }
+              insertData.questPool = result._id;
+              questCreate(insertData, res);
+            });
+          } else {
+            QuestPool.update({_id: result._id}, {
+              $set: {
+                tags: insertData.tags
+              }
+            }, function (err, questPool) {
+              if (err) {
+                return handleError(res, err);
+              }
+              insertData.questPool = result._id;
+              questCreate(insertData, res);
+            });
+          }
+        } else {
+          insertData.questPool = result._id;
+          questCreate(insertData, res);
+        }
+
+      }else{
+        QuestPool.create({
+          title: insertData.title,
+          tags: insertData.tags,
+          createUser: insertData.user
+        }, function (err, questPool) {
+          insertData.questPool = questPool._id;
+          questCreate(insertData, res);
+        });
+      }
     });
   }
+
+
 };
 
 var questCreate = function(quest, res){
@@ -122,7 +148,7 @@ var questCreate = function(quest, res){
     if(err) { return handleError(res, err); }
     return res.json(201, quest);
   });
-}
+};
 
 // Updates an existing quest in the DB.
 exports.update = function(req, res) {

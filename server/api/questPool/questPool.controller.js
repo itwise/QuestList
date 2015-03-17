@@ -5,7 +5,12 @@ var Questpool = require('./questPool.model');
 
 // Get list of questPools
 exports.index = function(req, res) {
-  Questpool.find({}).limit(10)
+  var date = new Date(),
+    day = date.getDate() - 7,
+    month = date.getMonth(),
+    year = date.getFullYear();
+
+  Questpool.find({ updatedAt : {$lt : new Date(), $gt: new Date(year +','+month+','+day)}})
     .sort('-completeCount')
     .exec(function (err, questPools) {
       if(err) { return handleError(res, err); }
